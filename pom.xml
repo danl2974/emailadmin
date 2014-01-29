@@ -98,6 +98,12 @@
 	    <artifactId>servlet-api</artifactId>
 	    <version>2.5</version>
        </dependency>
+       
+       <dependency>  
+        <groupId>org.primefaces</groupId>  
+        <artifactId>primefaces</artifactId>  
+        <version>4.0</version>  
+      </dependency>  
             
 
         <!-- First declare the APIs we depend on and need for compilation. All 

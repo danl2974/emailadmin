@@ -4,7 +4,8 @@
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:h="http://java.sun.com/jsf/html"
-    template="/WEB-INF/templates/default.xhtml">
+    template="/WEB-INF/templates/default.xhtml"
+    xmlns:p="http://primefaces.org/ui">
     <ui:define name="content">
         <h1>Email Engine Admin</h1>
 
@@ -12,10 +13,10 @@
             <p>Upload Email Template</p>
             
         </div>
-
+        <div class="input-container">
         <h:form id="reg">
             <h2>Create Template</h2>
-            <h:panelGrid columns="3" columnClasses="titleCell">
+            <h:panelGrid columns="3" columnClasses="titleCell" styleClass="addNewTable">
                 <h:outputLabel for="fromname" value="From Name:" />
                 <h:inputText id="fromname" value="#{newTemplate.fromname}" />
                 <h:message for="fromname" errorClass="invalid" />
@@ -29,7 +30,7 @@
                 <h:message for="subjectline" errorClass="invalid" />
                 
                 <h:outputLabel for="creative" value="Creative:" />
-                <h:inputTextarea row="100" col="10" id="creative" value="#{newTemplate.creative}"/>
+                <h:inputTextarea id="creative" value="#{newTemplate.creative}"/>
                 
             </h:panelGrid>
 
@@ -47,7 +48,47 @@
         
         <h2>Active Templates</h2>
         
-        <h:dataTable var="_template" value="#{templates}"
+        
+       <p:dataTable id="dataTable" var="_template" value="#{templatesL.templates}"
+                 paginator="true" rows="3"
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                 rowsPerPageTemplate="5,10,15">
+        <f:facet name="header">
+            Templates
+        </f:facet>
+
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="TEMPLATE ID" />
+            </f:facet>
+            <h:outputText value="#{_template.id}" />
+        </p:column>
+
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="From Name" />
+            </f:facet>
+            <h:outputText value="#{_template.fromname}" />
+        </p:column>
+
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="From Address" />
+            </f:facet>
+            <h:outputText value="#{_template.fromaddress}" />
+        </p:column>
+
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Subject Line" />
+            </f:facet>
+            <h:outputText value="#{_template.subjectline}" />
+        </p:column>
+    </p:dataTable>
+        
+    </div>
+ <!-- 
+        <h:dataTable var="_template" value="#{templatesL.templates}"
             rendered="#{not empty templates}"
             styleClass="simpletablestyle">
             <h:column>
@@ -66,20 +107,12 @@
                 <f:facet name="header">Subject Line</f:facet>
                 #{_template.subjectline}
             </h:column>
-            
-            <!--
-            <h:column>
-                <f:facet name="header">REST URL</f:facet>
-                <a
-                    href="#{request.contextPath}/rest/members/#{_member.id}">/rest/members/#{_member.id}</a>
-            </h:column>
-            -->
-            <!--
-            <f:facet name="footer">
-            REST URL for all members: <a
-                    href="#{request.contextPath}/rest/members">/rest/members</a>
-            </f:facet>
-            -->
+
         </h:dataTable>
+-->        
+        
+                    
+        
+        
     </ui:define>
 </ui:composition>

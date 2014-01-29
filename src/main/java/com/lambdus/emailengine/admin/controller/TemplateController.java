@@ -23,8 +23,10 @@ public class TemplateController {
     @Inject
     private TemplateAddition templateAddition;
     
+    /*
     @Inject
     private TemplateRepository templateRepository;
+    */
 
     @Produces
     @Named
