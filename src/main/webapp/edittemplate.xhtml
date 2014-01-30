@@ -5,7 +5,8 @@
     template="/WEB-INF/templates/default.xhtml">
     <ui:define name="content">
     <h:form>
-        <rich:editor id="editor" toolbar="full" value="#{templateEditor.creative}" style="margin-bottom: 1em">
+        <rich:editor id="editor" toolbar="full" value="#{templateEditor.creative}" style="margin-bottom: 1em" height="550">
+            <f:param name="save_onsavecallback" value="saveCreative" />
             <a4j:ajax event="change" render="panel" status="panelUpdateStatus" />
             <a4j:ajax event="dirty" render="panel" status="panelUpdateStatus">
                 <a4j:attachQueue requestDelay="1000" />
