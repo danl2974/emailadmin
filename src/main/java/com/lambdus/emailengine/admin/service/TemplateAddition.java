@@ -26,5 +26,9 @@ public class TemplateAddition {
         em.persist(template);
         templateEventSrc.fire(template);
     }
+    
+    public Template doMerge(Template template) {   
+ 	   return em.merge(template);
+    }
 }
 

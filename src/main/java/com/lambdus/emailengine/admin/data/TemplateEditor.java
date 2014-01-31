@@ -1,6 +1,7 @@
 package com.lambdus.emailengine.admin.data;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -28,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.lambdus.emailengine.admin.model.Template;
+import com.lambdus.emailengine.admin.service.TemplateAddition;
 
 import org.jboss.logging.Logger;
 
@@ -47,8 +49,11 @@ public class TemplateEditor {
     @Inject
     private FacesContext facesContext;
     
-    @PersistenceContext(type=PersistenceContextType.EXTENDED)
-    private EntityManager em;
+    @EJB
+    private TemplateAddition templateAddition;
+    
+    //@PersistenceContext(type=PersistenceContextType.EXTENDED)
+    //private EntityManager em;
     
     private String creative;
     
@@ -61,14 +66,11 @@ public class TemplateEditor {
     }
     
     //@TransactionAttribute(TransactionAttributeType.REQUIRED)
-    
+    //@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void setCreative(String creative) {
-    	log.info(em);
-    	em.joinTransaction();
         this.creative = creative;
         this.template.setcreative(creative);
-        em.merge(template);
-        //return template;
+        templateAddition.doMerge(template);
     }
 
     @PostConstruct

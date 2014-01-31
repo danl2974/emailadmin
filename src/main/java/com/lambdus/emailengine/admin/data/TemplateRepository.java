@@ -3,6 +3,8 @@ package com.lambdus.emailengine.admin.data;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -19,6 +21,7 @@ public class TemplateRepository {
    public Template findById(int id) {
        return em.find(Template.class, id);
    }
+   
 
    /*
    public Member findByEmail(String email) {
