@@ -5,14 +5,14 @@
     template="/WEB-INF/templates/default.xhtml">
     <ui:define name="content">
     <h:form>
-        <rich:editor id="editor" toolbar="full" value="#{templateEditor.creative}" style="margin-bottom: 1em" height="550">
-            <f:param name="save_onsavecallback" value="saveCreative" />
+        <rich:editor id="editor" toolbar="basic" value="#{templateEditor.creative}" style="margin-bottom: 1em" height="550">
             <a4j:ajax event="change" render="panel" status="panelUpdateStatus" />
             <a4j:ajax event="dirty" render="panel" status="panelUpdateStatus">
                 <a4j:attachQueue requestDelay="1000" />
             </a4j:ajax>
+            
         </rich:editor>
-         
+         <a4j:commandButton value="Save" action="#{templateEditor.setcreative}" reRender="panel"/>
         <rich:panel id="panel">
             <f:facet name="header">
                 Template Editor

@@ -34,6 +34,7 @@ import com.lambdus.emailengine.admin.service.TemplateAddition;
 import org.jboss.logging.Logger;
 
 @ManagedBean(name = "templateEditor")
+//@RequestScoped
 @SessionScoped
 //@Stateful
 //@Stateless
@@ -58,7 +59,7 @@ public class TemplateEditor {
     private String creative;
     
     private Template template;
-    
+     
     @Produces
     @Named
     public String getCreative() {
