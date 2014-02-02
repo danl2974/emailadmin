@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="/WEB-INF/templates/default.xhtml">
+    <ui:define name="content">
+    <h:form>    
+        <rich:editor id="editor" toolbar="CustomToolbar" value="#{templateEditor.creative}" style="margin-bottom: 1em" height="550">
+            <a4j:ajax event="change" render="panel" status="panelUpdateStatus" />
+            <a4j:ajax event="dirty" render="panel" status="panelUpdateStatus">
+                <a4j:attachQueue requestDelay="1000" />
+            </a4j:ajax>
+            
+                <f:facet name="config">
+
+        toolbar_CustomToolbar:
+
+        [
+
+        { name: 'document', items : [ 'Source' ] },
+
+        ]
+            </f:facet>
+            
+        </rich:editor>
+        
+        <a4j:commandButton value="Save" action="#{templateEditor.setcreative}" render="saveStatus" reRender="panel"/>
+       
+        <a4j:status>
+            <f:facet name="start">
+                <h:outputText value="Saving Template ID #{templateEditor.templateString}" />
+                <!-- <h:graphicImage value="/images/ai.gif" alt="ai" /> -->
+            </f:facet>
+        </a4j:status>
+        <!-- 
+        <a4j:outputPanel>
+          <h:outputText id="saveStatus" value="Template #{templateEditor.templateString} Saved!" rendered="#{not empty templateEditor.templateString}"/>
+        </a4j:outputPanel>
+        -->
+        
+        <br/><br/><br/>
+        <rich:panel id="panel">
+            <f:facet name="header">
+                Template Editor
+                <a4j:status name="panelUpdateStatus">
+                    <f:facet name="start">
+                        (Updating)
+                    </f:facet>
+                </a4j:status>
+            </f:facet>
+            <h:outputText escape="false" value="#{templateEditor.creative}" />
+        </rich:panel>
+ 
+ 
+    </h:form>
+    
+</ui:define>
+</ui:composition>

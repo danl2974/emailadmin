@@ -56,6 +56,13 @@
         <f:facet name="header">
             Templates
         </f:facet>
+        
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="EDIT" />
+            </f:facet>
+            <a href="#{request.contextPath}/edittemplate.jsf?t=#{_template.id}">Edit</a>
+        </p:column>
 
         <p:column>
             <f:facet name="header">

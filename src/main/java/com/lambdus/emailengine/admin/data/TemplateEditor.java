@@ -59,6 +59,8 @@ public class TemplateEditor {
     private String creative;
     
     private Template template;
+    
+    private String templateString;
      
     @Produces
     @Named
@@ -81,9 +83,16 @@ public class TemplateEditor {
         Template t = templateRepository.findById(Integer.valueOf(tid));
         this.template = t;
         this.creative = t.getcreative();
+        this.templateString = String.valueOf(this.template.getid());
     }
  
     
+    public String getTemplateString(){
+    	return templateString;
+    	}
     
+    public void setTemplateString(String templateString){
+    	this.templateString = templateString;
+    	}
     
 }

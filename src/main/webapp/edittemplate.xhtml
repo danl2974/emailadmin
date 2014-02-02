@@ -2,31 +2,26 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
     xmlns:rich="http://richfaces.org/rich"
+    xmlns:p="http://primefaces.org/ui"
     template="/WEB-INF/templates/default.xhtml">
     <ui:define name="content">
-    <h:form>
-        <rich:editor id="editor" toolbar="basic" value="#{templateEditor.creative}" style="margin-bottom: 1em" height="550">
-            <a4j:ajax event="change" render="panel" status="panelUpdateStatus" />
-            <a4j:ajax event="dirty" render="panel" status="panelUpdateStatus">
-                <a4j:attachQueue requestDelay="1000" />
-            </a4j:ajax>
-            
-        </rich:editor>
-         <a4j:commandButton value="Save" action="#{templateEditor.setcreative}" reRender="panel"/>
-        <rich:panel id="panel">
-            <f:facet name="header">
-                Template Editor
-                <a4j:status name="panelUpdateStatus">
-                    <f:facet name="start">
-                        (Updating)
-                    </f:facet>
-                </a4j:status>
-            </f:facet>
-            <h:outputText escape="false" value="#{templateEditor.creative}" />
-        </rich:panel>
- 
- 
+    
+    <h:form id="form">  
+  
+    <p:editor id="editor" value="#{templateEditor.creative}" height="500" width="775"/>  
+  
+    <h:panelGrid columns="1" style="margin-top:10px">  
+        <p:commandButton id="submitButton" value="Save" update="display" oncomplete="PF('dlg').show()"  
+                        icon="ui-icon-disk" />   
+    </h:panelGrid>  
+  
+    <p:dialog header="Content" widgetVar="dlg" showEffect="fade" hideEffect="fade" modal="true">  
+        <h:outputText id="display" value="#{templateEditor.creative}" escape="false" />  
+    </p:dialog>  
+  
     </h:form>
+    
+    
     
 </ui:define>
 </ui:composition>
