@@ -14,41 +14,8 @@
             
         </div>
         <div class="input-container">
-        <h:form id="reg">
-            <h2>Create Template</h2>
-            <h:panelGrid columns="3" styleClass="addNewTable">
-                <h:outputLabel for="fromname" value="From Name:" />
-                <h:inputText id="fromname" value="#{newTemplate.fromname}" />
-                <h:message for="fromname" errorClass="invalid" />
-
-                <h:outputLabel for="fromaddress" value="From Email:" />
-                <h:inputText id="fromaddress" value="#{newTemplate.fromaddress}" />
-                <h:message for="fromaddress" errorClass="invalid" />
-
-                <h:outputLabel for="subjectline" value="Subject Line:" />
-                <h:inputText id="subjectline" value="#{newTemplate.subjectline}" />
-                <h:message for="subjectline" errorClass="invalid" />
-                
-                <h:outputLabel for="creative" value="Creative:" />
-                <h:inputTextarea id="creative" value="#{newTemplate.creative}"/>
-                
-            </h:panelGrid>
-
-            <p>
-                <h:panelGrid columns="2">
-                    <h:commandButton id="register"
-                        action="#{templateController.addNew}"
-                        value="Add Template" styleClass="register" />
-                    <h:messages styleClass="messages"
-                        errorClass="invalid" infoClass="valid"
-                        warnClass="warning" globalOnly="true" />
-                </h:panelGrid>
-            </p>
-        </h:form>
         
-        <h2>Active Templates</h2>
-        
-        
+       <h2>Active Email Templates</h2>  
        <p:dataTable id="dataTable" var="_template" value="#{templatesL.templates}"
                  paginator="true" rows="3"
                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -91,7 +58,42 @@
             </f:facet>
             <h:outputText value="#{_template.subjectline}" />
         </p:column>
-    </p:dataTable>
+        </p:dataTable>        
+        
+        
+        <h:form id="reg">
+            <h2>Create Template</h2>
+            <h:panelGrid columns="3" styleClass="addNewTable">
+                <h:outputLabel for="fromname" value="From Name:" />
+                <h:inputText id="fromname" value="#{newTemplate.fromname}" />
+                <h:message for="fromname" errorClass="invalid" />
+
+                <h:outputLabel for="fromaddress" value="From Email:" />
+                <h:inputText id="fromaddress" value="#{newTemplate.fromaddress}" />
+                <h:message for="fromaddress" errorClass="invalid" />
+
+                <h:outputLabel for="subjectline" value="Subject Line:" />
+                <h:inputText id="subjectline" value="#{newTemplate.subjectline}" />
+                <h:message for="subjectline" errorClass="invalid" />
+                
+                <h:outputLabel for="creative" value="Creative:" />
+                <h:inputTextarea id="creative" value="#{newTemplate.creative}"/>
+                
+            </h:panelGrid>
+
+            <p>
+                <h:panelGrid columns="2">
+                    <h:commandButton id="register"
+                        action="#{templateController.addNew}"
+                        value="Add Template" styleClass="register" />
+                    <h:messages styleClass="messages"
+                        errorClass="invalid" infoClass="valid"
+                        warnClass="warning" globalOnly="true" />
+                </h:panelGrid>
+            </p>
+        </h:form>
+        
+
         
     </div>
  <!-- 

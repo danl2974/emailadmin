@@ -5,18 +5,37 @@
     xmlns:p="http://primefaces.org/ui"
     template="/WEB-INF/templates/default.xhtml">
     <ui:define name="content">
+
+    <h:form id="form">
+     <p:menubar>  
+        <p:submenu label="Menu">
+           <p:menuitem value="Home" url="/" />   
+        </p:submenu>
+     </p:menubar>
+      
+    <h1>Email Template Editor</h1>
+    <h2>ID: <span style="color: #51a96d;">#{templateEditor.templateString}</span></h2>
     
-    <h:form id="form">  
-  
+    <h:panelGrid columns="2" cellpadding="5">
+    <h:outputLabel for="fromname" value="From Name: " />
+    <p:inputText id="fromname" value="#{templateEditor.fromname}" />
+    <h:outputLabel for="fromaddress" value="From Address: " />
+    <p:inputText id="fromaddress" value="#{templateEditor.fromaddress}" />
+    <h:outputLabel for="subjectline" value="Subject Line: " />
+    <p:inputText id="subjectline" value="#{templateEditor.subjectline}" />
+    </h:panelGrid>
+      
     <p:editor id="editor" value="#{templateEditor.creative}" height="500" width="775"/>  
   
     <h:panelGrid columns="1" style="margin-top:10px">  
-        <p:commandButton id="submitButton" value="Save" update="display" oncomplete="PF('dlg').show()"  
-                        icon="ui-icon-disk" />   
-    </h:panelGrid>  
+        <p:commandButton id="submitButton" value="Save" update="savedisplay" oncomplete="PF('dlg').show()"  
+                        icon="ui-icon-disk" actionListener="#{timestampBean.current}" />
+         <h:outputText value="#{timestampBean.timestamp}" id="savedisplay" />                
+    </h:panelGrid>
+     
   
-    <p:dialog header="Content" widgetVar="dlg" showEffect="fade" hideEffect="fade" modal="true">  
-        <h:outputText id="display" value="#{templateEditor.creative}" escape="false" />  
+    <p:dialog header="Template ID #{templateEditor.templateString} Saved" widgetVar="dlg" showEffect="fade" hideEffect="fade" modal="true">  
+        <h:outputText id="display" value="#{templateEditor.creative}" escape="false" />
     </p:dialog>  
   
     </h:form>

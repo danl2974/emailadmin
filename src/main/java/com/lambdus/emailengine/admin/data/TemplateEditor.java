@@ -14,6 +14,7 @@ import javax.enterprise.event.Reception;
 import javax.enterprise.inject.Produces;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -35,7 +36,8 @@ import org.jboss.logging.Logger;
 
 @ManagedBean(name = "templateEditor")
 //@RequestScoped
-@SessionScoped
+//@SessionScoped
+@ViewScoped
 //@Stateful
 //@Stateless
 //@TransactionManagement(TransactionManagementType.CONTAINER)
@@ -57,6 +59,12 @@ public class TemplateEditor {
     //private EntityManager em;
     
     private String creative;
+    
+    private String fromname;
+    
+    private String fromaddress;
+    
+    private String subjectline;
     
     private Template template;
     
@@ -81,8 +89,12 @@ public class TemplateEditor {
         HttpServletRequest req = (HttpServletRequest) facesContext.getCurrentInstance().getExternalContext().getRequest();
         String tid = ( req.getParameter("t") == null ) ?  "0" : req.getParameter("t"); 
         Template t = templateRepository.findById(Integer.valueOf(tid));
+        log.info("fetchCreativeById called");
         this.template = t;
         this.creative = t.getcreative();
+        this.fromname = t.getfromname();
+        this.fromaddress = t.getfromaddress();
+        this.subjectline = t.getsubjectline();
         this.templateString = String.valueOf(this.template.getid());
     }
  
@@ -93,6 +105,36 @@ public class TemplateEditor {
     
     public void setTemplateString(String templateString){
     	this.templateString = templateString;
+    	}
+    
+    public String getFromname(){
+    	return fromname;
+    	}
+    
+    public void setFromname(String fromname){
+        this.fromname = fromname;
+        this.template.setfromname(fromname);
+        templateAddition.doMerge(template);
+    	}
+    
+    public String getFromaddress(){
+    	return fromaddress;
+    	}
+    
+    public void setFromaddress(String fromaddress){
+        this.fromaddress = fromaddress;
+        this.template.setfromaddress(fromaddress);
+        templateAddition.doMerge(template);
+    	}
+    
+    public String getSubjectline(){
+    	return subjectline;
+    	}
+    
+    public void setSubjectline(String subjectline){
+        this.subjectline = subjectline;
+        this.template.setsubjectline(subjectline);
+        templateAddition.doMerge(template);
     	}
     
 }
