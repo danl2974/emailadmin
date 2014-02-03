@@ -9,10 +9,6 @@
     <ui:define name="content">
         <h1>Email Engine Admin</h1>
 
-        <div>
-            <p>Upload Email Template</p>
-            
-        </div>
         <div class="input-container">
         
        <h2>Active Email Templates</h2>  
@@ -61,36 +57,31 @@
         </p:dataTable>        
         
         
-        <h:form id="reg">
+        <h:form id="templatenew">
             <h2>Create Template</h2>
-            <h:panelGrid columns="3" styleClass="addNewTable">
-                <h:outputLabel for="fromname" value="From Name:" />
-                <h:inputText id="fromname" value="#{newTemplate.fromname}" />
-                <h:message for="fromname" errorClass="invalid" />
+            
+    <h:panelGrid columns="2" cellpadding="5">
+    <h:outputLabel for="fromname" value="From Name: " />
+    <p:inputText id="fromname" value="#{templateCreator.fromname}" />
+    <h:outputLabel for="fromaddress" value="From Address: " />
+    <p:inputText id="fromaddress" value="#{templateCreator.fromaddress}" />
+    <h:outputLabel for="subjectline" value="Subject Line: " />
+    <p:inputText id="subjectline" value="#{templateCreator.subjectline}" />
+    <h:outputLabel for="creative" value="Creative: " />
+    <p:inputTextarea id="creative" rows="10" cols="50" value="#{templateCreator.creative}" />
+    </h:panelGrid>
+    
+        <h:panelGrid columns="1" style="margin-top:10px">  
+        <p:commandButton id="submitButton" value="Create" action="#{templateCreator.addNew}" update="createdisplay" oncomplete="PF('createdisplay').show()"  
+                        icon="ui-icon-disk" />
+        </h:panelGrid>
+        
+        <p:dialog widgetVar="createdisplay" header="New Template" width="200"  
+        resizable="false" showEffect="clip" hideEffect="clip">  
+             <h:outputText value="New Template Created" id="createdisplay" /> 
+        </p:dialog>
+            
 
-                <h:outputLabel for="fromaddress" value="From Email:" />
-                <h:inputText id="fromaddress" value="#{newTemplate.fromaddress}" />
-                <h:message for="fromaddress" errorClass="invalid" />
-
-                <h:outputLabel for="subjectline" value="Subject Line:" />
-                <h:inputText id="subjectline" value="#{newTemplate.subjectline}" />
-                <h:message for="subjectline" errorClass="invalid" />
-                
-                <h:outputLabel for="creative" value="Creative:" />
-                <h:inputTextarea id="creative" value="#{newTemplate.creative}"/>
-                
-            </h:panelGrid>
-
-            <p>
-                <h:panelGrid columns="2">
-                    <h:commandButton id="register"
-                        action="#{templateController.addNew}"
-                        value="Add Template" styleClass="register" />
-                    <h:messages styleClass="messages"
-                        errorClass="invalid" infoClass="valid"
-                        warnClass="warning" globalOnly="true" />
-                </h:panelGrid>
-            </p>
         </h:form>
         
 
