@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import java.util.List;
 
+import com.lambdus.emailengine.admin.model.Target;
 import com.lambdus.emailengine.admin.model.Template;
 
 import org.jboss.logging.Logger;
@@ -29,8 +30,9 @@ public class TemplateList {
     @Inject
     private FacesContext facesContext;
     
-    
     private List<Template> templates;
+    
+    private Template selectedTemplate;
 
     
     @Produces
@@ -38,6 +40,8 @@ public class TemplateList {
     public List<Template> getTemplates() {
         return templates;
     }
+    
+    
     
   
     public void onMemberListChanged(@Observes(notifyObserver = Reception.IF_EXISTS) final Template template) {
@@ -59,7 +63,15 @@ public class TemplateList {
         log.info("templatesoffset size is " + String.valueOf(this.templates.size()) );
         
     }
-*/  
+*/ 
+    
+    public Template getSelectedTemplate(){
+    	return selectedTemplate;
+    }
+	
+    public void setSelectedTemplate(Template selectedTemplate){
+    	this.selectedTemplate = selectedTemplate;
+    }
     
     
     
