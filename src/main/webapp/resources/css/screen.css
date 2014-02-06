@@ -6,6 +6,10 @@ float: left;
 width:100%;
 padding: 0px 50px 0px 0px;
 }
+campaign-select{
+text-align:left;
+width: 400px;
+}
 
 body {
   margin: 0;

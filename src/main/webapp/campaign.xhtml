@@ -18,15 +18,15 @@
     <h:panelGrid columns="2" cellpadding="5" style="margin-bottom:10px">
     
     <h:outputText value="Select Target: " />  
-        <p:selectOneMenu value="#{targetList.selectedTarget}" converter="_target">  
+        <p:selectOneMenu value="#{targetList.selectedTarget}" styleClass="campaign-select">  
             <f:selectItem itemLabel="Select One" itemValue="" />  
-            <f:selectItem value="#{targetList.targets}" var="_target" itemLabel="#{_target.id} #{_target.name}" itemValue="#{_target.id}" />  
+            <f:selectItems value="#{targetList.targets}" var="_target" itemLabel="#{_target.id} #{_target.name}" itemValue="#{_target.id}" />  
         </p:selectOneMenu>  
         
      <h:outputText value="Select Template: " />  
-        <p:selectOneMenu value="#{templatesL.selectedTemplate}" converter="_template">  
+        <p:selectOneMenu value="#{templatesL.selectedTemplate}" styleClass="campaign-select">
             <f:selectItem itemLabel="Select One" itemValue="" />  
-            <f:selectItem value="#{templatesL.templates}" var="_template" itemLabel="#{_template.id}  #{_template.subjectline}" itemValue="#{_template.id}" />  
+            <f:selectItems value="#{templatesL.templates}" var="_template" itemLabel="#{_template.id}  #{_template.subjectline}" itemValue="#{_template.id}" />  
         </p:selectOneMenu>  
     
 
