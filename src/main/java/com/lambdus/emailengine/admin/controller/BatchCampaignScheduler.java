@@ -20,12 +20,15 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
+import javax.inject.Inject;
 
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 
 import org.jboss.logging.Logger;
+
+import com.lambdus.emailengine.admin.util.BatchCampaignController;
 
 @ManagedBean
 @SessionScoped
@@ -35,6 +38,9 @@ public class BatchCampaignScheduler {
 	
 	//@EJB(mappedName = "BatchCampaignController")
 	//private BatchCampaignController campaignController;
+	
+	@Inject
+	private BatchCampaignController campaignController;
 	
 	private int templateId;
 	
@@ -80,11 +86,14 @@ public class BatchCampaignScheduler {
 	private void start(){
 		
 		 log.info(String.format("Start called with template %s and target %s", this.templateId, this.targetId));
+		 /*
 		 final Hashtable jndiProperties = new Hashtable();
 	        jndiProperties.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
 	        final Context context = new InitialContext(jndiProperties);
 	        BatchCampaignController campaignController = (BatchCampaignController) context.lookup("java:global/emailengine/BatchCampaignController");
-		 /*
+		 
+		 
+		 
 		 Properties env = new Properties();  
 		    env.put(Context.INITIAL_CONTEXT_FACTORY, "org.jboss.naming.remote.client.InitialContextFactory");  
 		    env.put(Context.PROVIDER_URL, "remote://localhost:4447");  

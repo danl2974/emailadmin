@@ -2,6 +2,7 @@ package com.lambdus.emailengine.admin.util;
 
 import java.util.logging.Logger;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
@@ -9,6 +10,8 @@ import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
+
+import com.lambdus.emailengine.admin.controller.BatchCampaignController;
 
 
 public class Resources {
@@ -28,5 +31,10 @@ public class Resources {
     public FacesContext produceFacesContext() {
         return FacesContext.getCurrentInstance();
     }
+    
+    @Produces
+    @EJB(lookup = "java:global/emailengine/BatchCampaignController")
+    private BatchCampaignController campaignController;
+    
 
 }
