@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:p="http://primefaces.org/ui"
+    template="/WEB-INF/templates/default.xhtml">
+    <ui:define name="content">
+
+    
+     <p:menubar>  
+        <p:submenu label="Menu">
+           <p:menuitem value="Home" url="/" />   
+        </p:submenu>
+     </p:menubar>
+      
+    <h1>Campaign Scheduler</h1>
+    <h3>Select a template</h3>
+    
+    <h:form id="templateform">
+    <h:panelGrid columns="2" cellpadding="5" style="margin-bottom:10px"> 
+        
+     <h:outputText value="Select Template: " />  
+        <p:selectOneMenu value="#{batchCampaignScheduler.templateId}" id="selectedTemplate">
+            <f:selectItem itemLabel="Select One" itemValue="" styleClass="campaign-select" />  
+            <f:selectItems value="#{templatesL.templates}" var="_template" itemLabel="#{_template.id}  #{_template.subjectline}" itemValue="#{_template.id}" />  
+        </p:selectOneMenu>  
+    </h:panelGrid>
+      
+   <h:panelGrid columns="1" style="margin-top:10px"> 
+        <p:commandButton id="nextButton" value="Next" action="target" ajax="false"/>
+     </h:panelGrid>      
+  
+    </h:form>
+    
+    
+    
+</ui:define>
+</ui:composition>
