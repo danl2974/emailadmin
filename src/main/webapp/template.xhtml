@@ -21,13 +21,13 @@
         
      <h:outputText value="Select Template: " />  
         <p:selectOneMenu value="#{batchCampaignScheduler.templateId}" id="selectedTemplate">
-            <f:selectItem itemLabel="Select One" itemValue="" styleClass="campaign-select" />  
+            <f:selectItem itemLabel="Select One" itemValue="" styleClass="campaign-select" />
             <f:selectItems value="#{templatesL.templates}" var="_template" itemLabel="#{_template.id}  #{_template.subjectline}" itemValue="#{_template.id}" />  
         </p:selectOneMenu>  
     </h:panelGrid>
       
    <h:panelGrid columns="1" style="margin-top:10px"> 
-        <p:commandButton id="nextButton" value="Next" action="target" ajax="false"/>
+        <p:commandButton id="nextButton" value="Go to Target" action="target" ajax="false"/>
      </h:panelGrid>      
   
     </h:form>

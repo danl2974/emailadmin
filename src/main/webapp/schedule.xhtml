@@ -16,16 +16,31 @@
     <h1>Campaign Scheduler</h1>
     
     <h:form id="scheduleform">
+    
     <h:panelGrid columns="2" cellpadding="5" style="margin-bottom:10px">
-     </h:panelGrid>
-      
-     <h:panelGrid columns="1" style="margin-top:10px"> 
-        <p:commandButton id="scheduleButton" value="Schedule" action="#{batchCampaignScheduler.schedule}" oncomplete="PF('dlg').show()" icon="ui-icon-disk" />
-     </h:panelGrid>   
+    <h3>Schedule Send Time</h3>
+    <p:calendar value="#{batchCampaignScheduler.scheduledStart}" pattern="MM/dd/yyyy HH:mm:ss" />
+    </h:panelGrid>
+  
  
-     <p:dialog header="Mailing scheduled" widgetVar="dlg" showEffect="fade" hideEffect="fade" modal="true">  
-        <h:outputText id="display" value="Template #{batchCampaignScheduler.templateId}  Target #{batchCampaignScheduler.targetId}" escape="false" />
+     <h:panelGrid columns="1" style="margin-top:10px"> 
+        <p:commandButton id="nextButton" value="Go to Launch" action="launch" ajax="false"/>
+     </h:panelGrid>
+     
+     
+     <p:dialog header="Schedule Batch Campaign Time" widgetVar="dialog"  
+                showEffect="fold" hideEffect="fold">  
+  
+        <h:panelGrid id="display" columns="2" cellpadding="5">  
+  
+            <h:outputText value="Schedule: " />  
+            <h:outputText value="#{batchCampaignScheduler.scheduledStart}">  
+                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />  
+            </h:outputText>  
+  
+        </h:panelGrid>  
     </p:dialog>  
+     
   
     </h:form>
     

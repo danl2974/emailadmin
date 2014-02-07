@@ -1,6 +1,8 @@
 package com.lambdus.emailengine.admin.controller;
 
 import java.io.Serializable;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
@@ -87,7 +89,9 @@ public class BatchCampaignScheduler {
 	
 	private void start(){
 		
-		 log.info(String.format("Start called with template %s and target %s", this.templateId, this.targetId));
+		    Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		    String datestr = formatter.format(this.scheduledStart);	
+		    log.info(String.format("Start called with template %s and target %s and date %s", this.templateId, this.targetId, datestr));
 		 
 		    final Hashtable jndiProperties = new Hashtable();
 	        jndiProperties.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
