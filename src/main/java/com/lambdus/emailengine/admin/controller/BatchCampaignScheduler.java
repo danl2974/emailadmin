@@ -28,7 +28,9 @@ import javax.naming.InitialContext;
 
 import org.jboss.logging.Logger;
 
-import com.lambdus.emailengine.admin.util.BatchCampaignController;
+import com.lambdus.emailengine.IBatchCampaignController;
+
+//import com.lambdus.emailengine.IBatchCampaignController;
 
 @ManagedBean
 @SessionScoped
@@ -39,8 +41,8 @@ public class BatchCampaignScheduler {
 	//@EJB(mappedName = "BatchCampaignController")
 	//private BatchCampaignController campaignController;
 	
-	@Inject
-	private BatchCampaignController campaignController;
+	//@Inject
+	//private IBatchCampaignController campaignController;
 	
 	private int templateId;
 	
@@ -86,14 +88,18 @@ public class BatchCampaignScheduler {
 	private void start(){
 		
 		 log.info(String.format("Start called with template %s and target %s", this.templateId, this.targetId));
-		 /*
-		 final Hashtable jndiProperties = new Hashtable();
+		 
+		    final Hashtable jndiProperties = new Hashtable();
 	        jndiProperties.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
+	        try{
 	        final Context context = new InitialContext(jndiProperties);
-	        BatchCampaignController campaignController = (BatchCampaignController) context.lookup("java:global/emailengine/BatchCampaignController");
+	        String jndi = "ejb:mailingservice/admin//BatchCampaignController!com.lambdus.emailengine.IBatchCampaignController?stateful";
+	        //String jndi = "java:global/mailingservice/admin/BatchCampaignController!com.lambdus.emailengine.IBatchCampaignController";
+	        IBatchCampaignController campaignController = (IBatchCampaignController) context.lookup(jndi);
+	        
+	        log.info("Call after JNDI remote bean lookup");
 		 
-		 
-		 
+		 /*
 		 Properties env = new Properties();  
 		    env.put(Context.INITIAL_CONTEXT_FACTORY, "org.jboss.naming.remote.client.InitialContextFactory");  
 		    env.put(Context.PROVIDER_URL, "remote://localhost:4447");  
@@ -107,6 +113,12 @@ public class BatchCampaignScheduler {
 		 campaignController.setTargetId(this.targetId);
 		 campaignController.setTemplateId(this.templateId);
 		 campaignController.startCampaign();
+		 
+	     }
+	        catch(Exception e){
+	        	log.info("exception with jndi lookup");
+	        	log.error(e.getMessage());
+	        }
 		 
 	}
 	

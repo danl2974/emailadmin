@@ -239,6 +239,22 @@
                 <artifactId>jboss-as-maven-plugin</artifactId>
                 <version>${version.jboss.maven.plugin}</version>
             </plugin>
+
+            
+              <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-war-plugin</artifactId>
+               <configuration>
+                <archive>
+                 <manifestEntries>
+                <Dependencies>deployment.mailingservice.ear.emailengine.war:main</Dependencies>
+                </manifestEntries>
+                   </archive>
+                </configuration>
+            </plugin>
+            
+            
+            
         </plugins>
     </build>
 

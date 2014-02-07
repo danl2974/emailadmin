@@ -11,14 +11,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 
-import com.lambdus.emailengine.admin.controller.BatchCampaignController;
+//import com.lambdus.emailengine.IBatchCampaignController;
 
 
 public class Resources {
     // use @SuppressWarnings to tell IDE to ignore warnings about field not being referenced directly
     @SuppressWarnings("unused")
     @Produces
-    @PersistenceContext
+    @PersistenceContext(unitName = "admin")
     private EntityManager em;
 
     @Produces
@@ -32,9 +32,10 @@ public class Resources {
         return FacesContext.getCurrentInstance();
     }
     
+    /*
     @Produces
     @EJB(lookup = "java:global/emailengine/BatchCampaignController")
-    private BatchCampaignController campaignController;
-    
+    private IBatchCampaignController campaignController;
+    */
 
 }

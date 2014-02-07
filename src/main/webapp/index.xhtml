@@ -11,6 +11,13 @@
 
         <div class="input-container">
         
+        <p:menubar>  
+        <p:submenu label="Menu">
+           <p:menuitem value="Batch Campaign" url="/template.jsf" />   
+        </p:submenu>
+        </p:menubar>
+        
+        
        <h2>Active Email Templates</h2>  
        <p:dataTable id="dataTable" var="_template" value="#{templatesL.templates}"
                  paginator="true" rows="3"
