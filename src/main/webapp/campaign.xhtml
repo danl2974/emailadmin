@@ -6,7 +6,7 @@
     template="/WEB-INF/templates/default.xhtml">
     <ui:define name="content">
 
-    <h:form id="form">
+    
      <p:menubar>  
         <p:submenu label="Menu">
            <p:menuitem value="Home" url="/" />   
@@ -15,30 +15,27 @@
       
     <h1>Campaign Scheduler</h1>
     
+    <h:form id="campaignform">
     <h:panelGrid columns="2" cellpadding="5" style="margin-bottom:10px">
     
     <h:outputText value="Select Target: " />  
-        <p:selectOneMenu value="#{targetList.selectedTarget}" styleClass="campaign-select">  
-            <f:selectItem itemLabel="Select One" itemValue="" />  
+        <p:selectOneMenu value="#{targetList.selectedTarget}" id="selectedTarget">  
+            <f:selectItem itemLabel="Select One" itemValue="" styleClass="campaign-select" />  
             <f:selectItems value="#{targetList.targets}" var="_target" itemLabel="#{_target.id} #{_target.name}" itemValue="#{_target.id}" />  
         </p:selectOneMenu>  
         
      <h:outputText value="Select Template: " />  
-        <p:selectOneMenu value="#{templatesL.selectedTemplate}" styleClass="campaign-select">
-            <f:selectItem itemLabel="Select One" itemValue="" />  
+        <p:selectOneMenu value="#{templatesL.selectedTemplate}" id="selectedTemplate">
+            <f:selectItem itemLabel="Select One" itemValue="" styleClass="campaign-select" />  
             <f:selectItems value="#{templatesL.templates}" var="_template" itemLabel="#{_template.id}  #{_template.subjectline}" itemValue="#{_template.id}" />  
         </p:selectOneMenu>  
-    
-
     </h:panelGrid>
-     
-  
-    <h:panelGrid columns="1" style="margin-top:10px">  
-        <p:commandButton id="submitButton" value="Commit Campaign" oncomplete="PF('dlg').show()" icon="ui-icon-disk" />             
-    </h:panelGrid>
-     
-  
-    <p:dialog header="Template (#{_template.id}  #{_template.subjectline}) Target (#{_target.id} #{_target.name}) commited" widgetVar="dlg" showEffect="fade" hideEffect="fade" modal="true">  
+      
+     <h:panelGrid columns="1" style="margin-top:10px"> 
+        <p:commandButton id="commitButton" value="Commit Campaign" actionListener="#{batchCampaign.commitcampaign}" oncomplete="PF('dlg').show()" icon="ui-icon-disk" />
+     </h:panelGrid>   
+ 
+     <p:dialog header="Template (#{_template.id}  #{_template.subjectline}) Target (#{_target.id} #{_target.name}) commited" widgetVar="dlg" showEffect="fade" hideEffect="fade" modal="true">  
         <h:outputText id="display" value="Template (#{_template.id}  #{_template.subjectline}) Target (#{_target.id} #{_target.name}) commited" escape="false" />
     </p:dialog>  
   

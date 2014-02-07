@@ -10,7 +10,6 @@ import javax.inject.Inject;
 import org.jboss.logging.Logger;
 
 import com.lambdus.emailengine.admin.model.Target;
-import com.lambdus.emailengine.admin.model.Template;
 
 
 @ManagedBean(name = "targetList")
@@ -36,10 +35,11 @@ public class TargetList {
 	
     public void setSelectedTarget(Target selectedTarget){
     	this.selectedTarget = selectedTarget;
+    	
     }
     
     @PostConstruct
-    public void  retrieveAllTargets() {
+    public void  retrieveAllTargets() {    	
     	targets = targetRepository.findAllOrderedById();
     }
 
