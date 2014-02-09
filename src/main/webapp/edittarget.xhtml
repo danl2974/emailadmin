@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:p="http://primefaces.org/ui"
+    template="/WEB-INF/templates/default.xhtml">
+    <ui:define name="content">
+
+    <h:form id="form">
+     <p:menubar>  
+        <p:submenu label="Menu">
+           <p:menuitem value="Home" url="/" />   
+        </p:submenu>
+     </p:menubar>
+      
+    <h1>Email Target Editor</h1>
+    <h2>ID: <span style="color: #51a96d;">#{targetEditor.targetString}</span></h2>
+    
+    <h:panelGrid columns="2" cellpadding="5">
+    <h:outputLabel for="name" value="Name: " />
+    <p:inputText id="name" value="#{targetEditor.name}" />
+    <h:outputLabel for="association" value="Association: " />
+    <p:inputText id="association" value="#{targetEditor.association}" />
+    <h:outputLabel for="queryText" value="Query Text: " />
+    <p:inputTextarea id="queryText" value="#{targetEditor.queryText}" />
+    </h:panelGrid>
+    
+  
+    <h:panelGrid columns="1" style="margin-top:10px">  
+        <p:commandButton id="submitButton" value="Save" update="savedisplay" oncomplete="PF('dlg').show()"  
+                        icon="ui-icon-disk" actionListener="#{timestampBean.current}" />
+         <h:outputText value="#{timestampBean.timestamp}" id="savedisplay" />                
+    </h:panelGrid>
+     
+  
+    <p:dialog header="Edit Saved" widgetVar="dlg" showEffect="fade" hideEffect="fade" modal="true">  
+        <h:outputText id="display" value="Template ID #{targetEditor.targetString} edited" escape="false" />
+    </p:dialog>  
+  
+    </h:form>
+    
+    
+    
+</ui:define>
+</ui:composition>

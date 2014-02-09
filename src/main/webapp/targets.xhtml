@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    template="/WEB-INF/templates/default.xhtml"
+    xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h1>Targets</h1>
+
+        <div class="input-container">
+        
+        <p:menubar>  
+        <p:submenu label="Menu">
+           <p:menuitem value="Batch Campaign" url="/template.jsf" />   
+        </p:submenu>
+        </p:menubar>
+        
+       <h2>Active Targets</h2>  
+       <p:dataTable id="dataTable" var="_target" value="#{targetList.targets}"
+                 paginator="true" rows="5"
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                 rowsPerPageTemplate="5,10,15">
+        <f:facet name="header">
+            Targets
+        </f:facet>
+        
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="EDIT" />
+            </f:facet>
+            <a href="#{request.contextPath}/edittarget.jsf?t=#{_target.id}">Edit</a>
+        </p:column>
+
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="TARGET ID" />
+            </f:facet>
+            <h:outputText value="#{_target.id}" />
+        </p:column>
+
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Name" />
+            </f:facet>
+            <h:outputText value="#{_target.name}" />
+        </p:column>
+
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Association" />
+            </f:facet>
+            <h:outputText value="#{_target.association}" />
+        </p:column>
+
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Query Text" />
+            </f:facet>
+            <h:outputText value="#{_target.queryText}" />
+        </p:column>
+        </p:dataTable>        
+        
+        
+        <h:form id="templatenew">
+            <h2>Create Target</h2>
+            
+    <h:panelGrid columns="2" cellpadding="5">
+    <h:outputLabel for="name" value="Name: " />
+    <p:inputText id="name" value="#{targetCreator.name}" />
+    <h:outputLabel for="association" value="Association: " />
+    <p:inputText id="association" value="#{targetCreator.association}" />
+    <h:outputLabel for="queryText" value="Query Text: " />
+    <p:inputTextarea id="queryText" rows="10" cols="50" value="#{targetCreator.queryText}" />
+    </h:panelGrid>
+    
+        <h:panelGrid columns="1" style="margin-top:10px">  
+        <p:commandButton id="submitButton" value="Create" action="#{targetCreator.addNew}" update="createdisplay" oncomplete="PF('createdisplay').show()"  
+                        icon="ui-icon-disk" />
+        </h:panelGrid>
+        
+        <p:dialog widgetVar="createdisplay" header="New Target" width="200"  
+        resizable="false" showEffect="clip" hideEffect="clip">  
+             <h:outputText value="New Target Created" id="createdisplay" /> 
+        </p:dialog>
+            
+
+        </h:form>     
+    </div>       
+    
+    </ui:define>
+</ui:composition>
