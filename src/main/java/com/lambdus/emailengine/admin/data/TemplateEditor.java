@@ -58,6 +58,8 @@ public class TemplateEditor {
     //@PersistenceContext(type=PersistenceContextType.EXTENDED)
     //private EntityManager em;
     
+    private String domain;
+    
     private String creative;
     
     private String fromname;
@@ -95,6 +97,7 @@ public class TemplateEditor {
         this.fromname = t.getfromname();
         this.fromaddress = t.getfromaddress();
         this.subjectline = t.getsubjectline();
+        this.domain = t.getdomain();
         this.templateString = String.valueOf(this.template.getid());
     }
  
@@ -134,6 +137,16 @@ public class TemplateEditor {
     public void setSubjectline(String subjectline){
         this.subjectline = subjectline;
         this.template.setsubjectline(subjectline);
+        templateAddition.doMerge(template);
+    	}
+    
+    public String getDomain(){
+    	return domain;
+    	}
+    
+    public void setDomain(String domain){
+        this.domain = domain;
+        this.template.setdomain(domain);
         templateAddition.doMerge(template);
     	}
     

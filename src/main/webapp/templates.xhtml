@@ -42,6 +42,13 @@
             </f:facet>
             <h:outputText value="#{_template.id}" />
         </p:column>
+        
+         <p:column>
+            <f:facet name="header">
+                <h:outputText value="Domain" />
+            </f:facet>
+            <h:outputText value="#{_template.domain}" />
+        </p:column>       
 
         <p:column>
             <f:facet name="header">
@@ -70,6 +77,8 @@
             <h2>Create Template</h2>
             
     <h:panelGrid columns="2" cellpadding="5">
+    <h:outputLabel for="domain" value="Domain: " />
+    <p:inputText id="domain" value="#{templateCreator.domain}" />    
     <h:outputLabel for="fromname" value="From Name: " />
     <p:inputText id="fromname" value="#{templateCreator.fromname}" />
     <h:outputLabel for="fromaddress" value="From Address: " />

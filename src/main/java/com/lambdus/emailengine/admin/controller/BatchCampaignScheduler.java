@@ -3,11 +3,13 @@ package com.lambdus.emailengine.admin.controller;
 import java.io.Serializable;
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.sql.Timestamp;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -29,10 +31,24 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 
 import org.jboss.logging.Logger;
+import org.quartz.CronExpression;
+import org.quartz.CronScheduleBuilder;
+import org.quartz.CronTrigger;
+import org.quartz.JobBuilder;
+import org.quartz.JobDataMap;
+import org.quartz.JobDetail;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.SimpleScheduleBuilder;
+import org.quartz.SimpleTrigger;
+import org.quartz.Trigger;
+import org.quartz.SchedulerFactory;
+import org.quartz.TriggerBuilder;
+import org.quartz.impl.StdSchedulerFactory;
 
 import com.lambdus.emailengine.IBatchCampaignController;
+import com.lambdus.emailengine.admin.schedule.BatchCampaignScheduledJob;
 
-//import com.lambdus.emailengine.IBatchCampaignController;
 
 @ManagedBean
 @SessionScoped
@@ -57,33 +73,47 @@ public class BatchCampaignScheduler {
 		
 	public void schedule() {
 		
-		 //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Campaign committed "));
-		
 		 log.info("schedule from bean called - template " + String.valueOf(this.templateId) + " target " + String.valueOf(this.targetId));
-		 start();
+		 Date date = new Date();
+		 Timestamp ts = new Timestamp(date.getTime());
+		 Calendar cal = Calendar.getInstance();
+		 cal.setTime(this.scheduledStart);
+		 cal.add(Calendar.HOUR_OF_DAY, 5);
+		 Date utcScheduleStart = cal.getTime();
 		 
-		 /*
-		 this.status = "committed";
-		 ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-		 Map<String, String[]> paramValues = ec.getRequestParameterValuesMap();
+		 log.info("Timestamp " + ts);
+		 try{
+		 SchedulerFactory sf = new StdSchedulerFactory();
+		 Scheduler scheduler = sf.getScheduler();
+		 scheduler.start();
 		 
-		 String committedTarget = paramValues.get("campaignform:selectedTarget_input")[0];
-		 String committedTemplate = paramValues.get("campaignform:selectedTemplate_input")[0];
+		 JobDetail job = JobBuilder.newJob(BatchCampaignScheduledJob.class)
+				    .withIdentity("job" + ts, "admin")
+				    .build();
 		 
-		 this.targetId = Integer.valueOf(committedTarget);
-		 this.templateId = Integer.valueOf(committedTemplate);
-		 
-		 log.info("commitcampaign " + committedTarget + " " + committedTemplate);
-		 
-		 start();
-		 */
-		 	 
-	/*	 
-		List<UIComponent> uic  = event.getComponent().getParent().getParent().getChildren(); 
-		 for (UIComponent c : uic){
-			 log.info("UI component id = " + c.getId() ); 
+		 JobDataMap jmd = job.getJobDataMap();
+		 jmd.put("templateId", templateId);
+		 jmd.put("targetId", targetId);
+
+	     SimpleTrigger trigger = (SimpleTrigger) TriggerBuilder.newTrigger()
+				    .withIdentity("trigger" + ts, "admin")
+				    .startAt(utcScheduleStart)
+				    .build();
+
+	     scheduler.scheduleJob(job, trigger);
+	     
+	     log.info("trigger start time " + trigger.getStartTime());
+	     log.info(scheduler.getMetaData().getSummary());
+	     
 		 }
-    */	
+		 catch (SchedulerException se){
+			 log.info(se.getMessage());
+		 }
+		 catch (Exception e){
+			 log.info(e.getMessage());
+		 }
+		 
+		 //start();
 		 
 	}
 	

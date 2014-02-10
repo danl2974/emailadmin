@@ -26,6 +26,10 @@ public class Template implements Serializable {
 
     @NotNull
     @NotEmpty
+    private String domain;    
+    
+    @NotNull
+    @NotEmpty
     private String fromname;
 
     @NotNull
@@ -78,6 +82,14 @@ public class Template implements Serializable {
     public void setcreative(String creative) {
         this.creative = creative;
     }    
+    public String getdomain() {
+        return domain;
+    }
+
+    public void setdomain(String domain) {
+        this.domain = domain;
+    }      
+    
     
     
 }

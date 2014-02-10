@@ -19,9 +19,9 @@
         </p:submenu>
         </p:menubar>
         
-       <h2>Active Email Templates</h2>  
+       <h2>Active Templates</h2>  
        <p:dataTable id="dataTable" var="_template" value="#{templatesL.templates}"
-                 paginator="true" rows="3"
+                 paginator="true" rows="10"
                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                  rowsPerPageTemplate="5,10,15">
         <f:facet name="header">
@@ -64,63 +64,57 @@
         </p:column>
         </p:dataTable>        
         
-        
-        <h:form id="templatenew">
-            <h2>Create Template</h2>
-            
-    <h:panelGrid columns="2" cellpadding="5">
-    <h:outputLabel for="fromname" value="From Name: " />
-    <p:inputText id="fromname" value="#{templateCreator.fromname}" />
-    <h:outputLabel for="fromaddress" value="From Address: " />
-    <p:inputText id="fromaddress" value="#{templateCreator.fromaddress}" />
-    <h:outputLabel for="subjectline" value="Subject Line: " />
-    <p:inputText id="subjectline" value="#{templateCreator.subjectline}" />
-    <h:outputLabel for="creative" value="Creative: " />
-    <p:inputTextarea id="creative" rows="10" cols="50" value="#{templateCreator.creative}" />
-    </h:panelGrid>
-    
-        <h:panelGrid columns="1" style="margin-top:10px">  
-        <p:commandButton id="submitButton" value="Create" action="#{templateCreator.addNew}" update="createdisplay" oncomplete="PF('createdisplay').show()"  
-                        icon="ui-icon-disk" />
-        </h:panelGrid>
-        
-        <p:dialog widgetVar="createdisplay" header="New Template" width="200"  
-        resizable="false" showEffect="clip" hideEffect="clip">  
-             <h:outputText value="New Template Created" id="createdisplay" /> 
-        </p:dialog>
-            
 
-        </h:form>
+  <h2>Active Targets</h2>  
+  <p:dataTable id="dataTable" var="_target" value="#{targetList.targets}"
+                 paginator="true" rows="10"
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                 rowsPerPageTemplate="5,10,15">
+        <f:facet name="header">
+            Targets
+        </f:facet>
+        
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="EDIT" />
+            </f:facet>
+            <a href="#{request.contextPath}/edittarget.jsf?t=#{_target.id}">Edit</a>
+        </p:column>
+
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="TARGET ID" />
+            </f:facet>
+            <h:outputText value="#{_target.id}" />
+        </p:column>
+
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Name" />
+            </f:facet>
+            <h:outputText value="#{_target.name}" />
+        </p:column>
+
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Association" />
+            </f:facet>
+            <h:outputText value="#{_target.association}" />
+        </p:column>
+
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Query Text" />
+            </f:facet>
+            <h:outputText value="#{_target.queryText}" />
+        </p:column>
+        </p:dataTable>              
+
         
 
         
     </div>
- <!-- 
-        <h:dataTable var="_template" value="#{templatesL.templates}"
-            rendered="#{not empty templates}"
-            styleClass="simpletablestyle">
-            <h:column>
-                <f:facet name="header">Template Id</f:facet>
-                #{_template.id}
-            </h:column>
-            <h:column>
-                <f:facet name="header">From Name</f:facet>
-                #{_template.fromname}
-            </h:column>
-            <h:column>
-                <f:facet name="header">From Address</f:facet>
-                #{_template.fromaddress}
-            </h:column>
-            <h:column>
-                <f:facet name="header">Subject Line</f:facet>
-                #{_template.subjectline}
-            </h:column>
-
-        </h:dataTable>
--->        
-        
-                    
-        
+            
         
     </ui:define>
 </ui:composition>

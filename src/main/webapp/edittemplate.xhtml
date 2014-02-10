@@ -17,6 +17,8 @@
     <h2>ID: <span style="color: #51a96d;">#{templateEditor.templateString}</span></h2>
     
     <h:panelGrid columns="2" cellpadding="5">
+    <h:outputLabel for="domain" value="Domain: " />
+    <p:inputText id="domain" value="#{templateEditor.domain}" />    
     <h:outputLabel for="fromname" value="From Name: " />
     <p:inputText id="fromname" value="#{templateEditor.fromname}" />
     <h:outputLabel for="fromaddress" value="From Address: " />

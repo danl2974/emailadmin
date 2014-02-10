@@ -22,6 +22,8 @@ public class TemplateCreator implements Serializable {
 	
     @Inject
     private TemplateAddition templateAddition;
+    
+    private String domain;
 	
     private String creative;
     
@@ -69,7 +71,15 @@ public class TemplateCreator implements Serializable {
     
     public void setSubjectline(String subjectline){
         this.subjectline = subjectline;
-    	}    
+    	} 
+    
+    public String getDomain(){
+    	return domain;
+    	}
+    
+    public void setDomain(String domain){
+        this.domain = domain;
+    	} 
     
     
     public void addNew(){
