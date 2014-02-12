@@ -30,7 +30,9 @@
      </h:panelGrid>   
  
      <p:dialog header="Mailing scheduled" widgetVar="dlg" showEffect="fade" hideEffect="fade" modal="true">  
-        <h:outputText id="display" value="Template #{batchCampaignScheduler.templateId}  Target #{batchCampaignScheduler.targetId}" escape="false" />
+        <h:outputText id="display1" value="Template ID: #{batchCampaignScheduler.templateId}  Target ID: #{batchCampaignScheduler.targetId}" escape="false" />
+        <br/>
+        <h:outputText id="display2" value="Scheduled time: #{batchCampaignScheduler.scheduledStart}" escape="false" />
     </p:dialog>  
   
     </h:form>

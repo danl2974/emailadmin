@@ -22,7 +22,7 @@
      <h:outputText value="Select Template: " />  
         <p:selectOneMenu value="#{batchCampaignScheduler.templateId}" id="selectedTemplate">
             <f:selectItem itemLabel="Select One" itemValue="" styleClass="campaign-select" />
-            <f:selectItems value="#{templatesL.templates}" var="_template" itemLabel="#{_template.id}  #{_template.subjectline}" itemValue="#{_template.id}" />  
+            <f:selectItems value="#{templatesL.templates}" var="_template" itemLabel="#{_template.id}  |  #{_template.fromname}  |  #{_template.subjectline}" itemValue="#{_template.id}" />  
         </p:selectOneMenu>  
     </h:panelGrid>
       

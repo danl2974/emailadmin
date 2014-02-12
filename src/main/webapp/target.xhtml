@@ -22,7 +22,7 @@
     <h:outputText value="Select Target: " />  
         <p:selectOneMenu value="#{batchCampaignScheduler.targetId}" id="selectedTarget">  
             <f:selectItem itemLabel="Select One" itemValue="" styleClass="campaign-select" />  
-            <f:selectItems value="#{targetList.targets}" var="_target" itemLabel="#{_target.id} #{_target.name}" itemValue="#{_target.id}" />  
+            <f:selectItems value="#{targetList.targets}" var="_target" itemLabel="#{_target.id}  |  #{_target.name}  |  #{_target.association}" itemValue="#{_target.id}" />  
         </p:selectOneMenu>  
         
     </h:panelGrid>
