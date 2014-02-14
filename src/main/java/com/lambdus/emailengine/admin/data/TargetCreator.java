@@ -1,6 +1,14 @@
 package com.lambdus.emailengine.admin.data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.Statement;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
@@ -44,6 +52,8 @@ public class TargetCreator implements Serializable {
     private String dbuser;
     
     private String dbpassword;
+    
+    private List<String> previewdata;
     
     
     public String getName(){
@@ -116,6 +126,15 @@ public class TargetCreator implements Serializable {
     }
     
     
+    public List<String> getPreviewdata() {
+        return previewdata;
+    }
+
+    public void setPreviewdata(List<String> previewdata) {
+        this.previewdata =  previewdata;
+    }   
+    
+    
      
     
     public void addNew(){
@@ -138,5 +157,40 @@ public class TargetCreator implements Serializable {
     		 log.info(e.getMessage());
     	 }
     }
+    
+    
+    public void fetchPreviewData(){
+    	log.info("fetch preview data called");
+    	ArrayList<String> previewList = new ArrayList<String>();
+    	try{
+        StringBuilder sb = new StringBuilder();
+    	String jdbcFormat = String.format("jdbc:%s://%s:%s", this.dbms, this.dbhost, this.dbport);
+    	Connection con = DriverManager.getConnection(jdbcFormat, this.dbuser, this.dbpassword);
+    	Statement stmt = con.createStatement();
+    	ResultSet rs = stmt.executeQuery(this.queryText);
+
+    	ResultSetMetaData rsmd = rs.getMetaData();
+    	int colCount = rsmd.getColumnCount();
+    	//log.info("results count" + rsmd.getColumnName(0) +  rsmd.getColumnName(1) + rsmd.getColumnName(2));
+    	
+    	int counter = 0;
+    	
+    	while (rs.next() && counter <= 20) {
+    		 
+    		 for (int i = 0; i < 1; i++)
+    		 {
+    	        previewList.add( sb.append( (String) rs.getObject(i) + " - " ).toString() );
+    		 }
+    		 counter ++;
+    	}
+    	
+    	 rs.last();
+    	 log.info("count " + counter + " " + rs.getRow() );
+    	}catch(Exception e){ log.info(e.getMessage());}	 
+    	 
+    	this.previewdata = previewList;
+    	log.info("previewdata list " + this.previewdata.size() );
+    }
+    
 }
 

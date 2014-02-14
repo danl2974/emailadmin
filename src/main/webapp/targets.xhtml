@@ -96,12 +96,20 @@
         <h:panelGrid columns="1" style="margin-top:10px">  
         <p:commandButton id="submitButton" value="Create" action="#{targetCreator.addNew}" update="createdisplay" oncomplete="PF('createdisplay').show()"  
                         icon="ui-icon-disk" />
+                        
+         <p:commandButton id="previewButton" value="Preview" action="#{targetCreator.fetchPreviewData}" oncomplete="PF('preview').show()" />                       
         </h:panelGrid>
         
         <p:dialog widgetVar="createdisplay" header="New Target" width="200"  
         resizable="false" showEffect="clip" hideEffect="clip">  
              <h:outputText value="New Target Created" id="createdisplay" /> 
         </p:dialog>
+        
+        <p:dialog header="Target Data Preview" widgetVar="preview" showEffect="fade" hideEffect="fade" modal="true">  
+             <p:dataTable id="previewtable" var="_preview" value="#{targetCreator.previewdata}">  
+                   <ui:repeat value="#{targetCreator.previewdata}" var="_preview">#{_preview}</ui:repeat>
+             </p:dataTable>  
+        </p:dialog>  
             
 
         </h:form>     
