@@ -36,6 +36,26 @@ public class Target implements Serializable {
     @NotEmpty
     private String association;
     
+    @NotNull
+    @NotEmpty
+    private String dbhost;
+    
+    @NotNull
+    @NotEmpty
+    private String dbms;
+    
+    @NotNull
+    @NotEmpty
+    private String dbport;
+    
+    @NotNull
+    @NotEmpty
+    private String dbuser;
+    
+    @NotNull
+    @NotEmpty
+    private String dbpassword;
+    
 
     public int getid() {
         return id;
@@ -68,7 +88,52 @@ public class Target implements Serializable {
     public void setassociation(String association) {
         this.association = association;
     }
-     
+    
+    
+
+    public String getdbhost() {
+        return dbhost;
+    }
+
+    public void setdbhost(String dbhost) {
+        this.dbhost = dbhost;
+    }
+    
+
+    public String getdbms() {
+        return dbms;
+    }
+
+    public void setdbms(String dbms) {
+        this.dbms = dbms;
+    }
+    
+
+    public String getdbport() {
+        return dbport;
+    }
+
+    public void setdbport(String dbport) {
+        this.dbport = dbport;
+    }
+    
+
+    public String getdbuser() {
+        return dbuser;
+    }
+
+    public void setdbuser(String dbuser) {
+        this.dbuser = dbuser;
+    }
+    
+  
+    public String getdbpassword() {
+        return dbpassword;
+    }
+
+    public void setdbpassword(String dbpassword) {
+        this.dbpassword = dbpassword;
+    }
     
 }
 

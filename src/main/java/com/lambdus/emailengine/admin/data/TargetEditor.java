@@ -60,6 +60,15 @@ public class TargetEditor {
     private Target target;
     
     private String targetString;
+    
+    private String dbhost;
+    
+    private String dbms;
+    
+    private String dbport;
+    
+    private String dbuser;
+    
 
     @PostConstruct
     public void  fetchTargetById() {
@@ -71,6 +80,11 @@ public class TargetEditor {
         this.association = t.getassociation();
         this.queryText = t.getqueryText();
         this.targetString = String.valueOf(this.target.getid());
+        this.dbhost = t.getdbhost(); 
+        this.dbms = t.getdbms();
+        this.dbport = t.getdbport();
+        this.dbuser = t.getdbuser();
+        
     }
  
     
@@ -111,5 +125,49 @@ public class TargetEditor {
         this.target.setqueryText(queryText);
         persistenceService.doMerge(target);
     	}
+    
+    public String getDbhost() {
+        return dbhost;
+    }
+
+    public void setDbhost(String dbhost) {
+        this.dbhost = dbhost;
+        this.target.setdbhost(dbhost);
+        persistenceService.doMerge(target);
+        
+    }
+    
+
+    public String getDbms() {
+        return dbms;
+    }
+
+    public void setDbms(String dbms) {
+        this.dbms = dbms;
+        this.target.setdbms(dbms);
+        persistenceService.doMerge(target);
+    }
+    
+
+    public String getDbport() {
+        return dbport;
+    }
+
+    public void setDbport(String dbport) {
+        this.dbport = dbport;
+        this.target.setdbport(dbport);
+        persistenceService.doMerge(target);
+    }
+    
+
+    public String getDbuser() {
+        return dbuser;
+    }
+
+    public void setDbuser(String dbuser) {
+        this.dbuser = dbuser;
+        this.target.setdbuser(dbuser);
+        persistenceService.doMerge(target);
+    }
     
 }

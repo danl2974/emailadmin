@@ -74,6 +74,21 @@
     <p:inputText id="name" value="#{targetCreator.name}" />
     <h:outputLabel for="association" value="Association: " />
     <p:inputText id="association" value="#{targetCreator.association}" />
+    <h:outputLabel for="dbhost" value="Database Host: " />
+    <p:inputText id="dbhost" value="#{targetCreator.dbhost}" />
+    <h:outputLabel for="dbms" value="Database System: " />
+    <p:selectOneMenu id="dbms" value="#{targetCreator.dbms}">  
+            <f:selectItem itemLabel="Select One" itemValue="" />  
+            <f:selectItem itemLabel="MS SQL Server" itemValue="sqlserver" />  
+            <f:selectItem itemLabel="MySQL" itemValue="mysql" />  
+            <f:selectItem itemLabel="PostgreSQL" itemValue="postgresql" /> 
+    </p:selectOneMenu> 
+    <h:outputLabel for="dbport" value="Database Port: " />
+    <p:inputText id="dbport" value="#{targetCreator.dbport}" />   
+    <h:outputLabel for="dbuser" value="Database Username: " />
+    <p:inputText id="dbuser" value="#{targetCreator.dbuser}" />   
+    <h:outputLabel for="dbpassword" value="Database Password: " />
+    <p:inputText id="dbpassword" value="#{targetCreator.dbpassword}" />           
     <h:outputLabel for="queryText" value="Query Text: " />
     <p:inputTextarea id="queryText" rows="10" cols="50" value="#{targetCreator.queryText}" />
     </h:panelGrid>
