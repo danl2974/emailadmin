@@ -2,7 +2,9 @@ package com.lambdus.emailengine.admin.data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -54,6 +56,10 @@ public class TargetCreator implements Serializable {
     private String dbpassword;
     
     private List<String> previewdata;
+    
+    private List<Map<String, Object>> rows;
+    
+    private List<String> columns;
     
     
     public String getName(){
@@ -134,7 +140,21 @@ public class TargetCreator implements Serializable {
         this.previewdata =  previewdata;
     }   
     
+    public List<Map<String, Object>> getRows() {
+        return rows;
+    }
+
+    public void setRows(List<Map<String, Object>> rows) {
+        this.rows =  rows;
+    }  
     
+    public List<String> getColumns() {
+        return columns;
+    }
+
+    public void setColumns(List<String> columns) {
+        this.columns =  columns;
+    } 
      
     
     public void addNew(){
@@ -160,36 +180,42 @@ public class TargetCreator implements Serializable {
     
     
     public void fetchPreviewData(){
-    	log.info("fetch preview data called");
+
     	ArrayList<String> previewList = new ArrayList<String>();
+    	ArrayList<String> columnsList = new ArrayList<String>();
+    	ArrayList<Map<String, Object>> rowsList = new ArrayList<Map<String, Object>>();
     	try{
-        StringBuilder sb = new StringBuilder();
     	String jdbcFormat = String.format("jdbc:%s://%s:%s", this.dbms, this.dbhost, this.dbport);
     	Connection con = DriverManager.getConnection(jdbcFormat, this.dbuser, this.dbpassword);
     	Statement stmt = con.createStatement();
     	ResultSet rs = stmt.executeQuery(this.queryText);
-
-    	ResultSetMetaData rsmd = rs.getMetaData();
-    	int colCount = rsmd.getColumnCount();
-    	//log.info("results count" + rsmd.getColumnName(0) +  rsmd.getColumnName(1) + rsmd.getColumnName(2));
     	
+    	ResultSetMetaData rsmd = rs.getMetaData();
+    	
+    	for(int j = 1; j <= rsmd.getColumnCount(); j++ ){
+    		columnsList.add(rsmd.getColumnName(j));
+    	}
+
     	int counter = 0;
     	
     	while (rs.next() && counter <= 20) {
-    		 
-    		 for (int i = 0; i < 1; i++)
+    		 String record = "";
+    		 HashMap<String, Object> recordMap = new HashMap<String, Object>();
+    		 for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++)
     		 {
-    	        previewList.add( sb.append( (String) rs.getObject(i) + " - " ).toString() );
+    			recordMap.put(rs.getMetaData().getColumnName(i), new String(rs.getBytes(i)));
+    	        record += (new String(rs.getBytes(i)) + "  ");
     		 }
+    		 previewList.add(record);
+    		 rowsList.add(recordMap);
     		 counter ++;
     	}
-    	
-    	 rs.last();
-    	 log.info("count " + counter + " " + rs.getRow() );
     	}catch(Exception e){ log.info(e.getMessage());}	 
     	 
-    	this.previewdata = previewList;
-    	log.info("previewdata list " + this.previewdata.size() );
+    	this.previewdata = (List<String>) previewList;
+    	this.columns = (List<String>) columnsList;
+    	this.rows = (List<Map<String, Object>>) rowsList;
+    	log.info("MAP " + this.rows.size() + "  " + this.previewdata.size());
     }
     
 }

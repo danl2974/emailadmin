@@ -97,7 +97,7 @@
         <p:commandButton id="submitButton" value="Create" action="#{targetCreator.addNew}" update="createdisplay" oncomplete="PF('createdisplay').show()"  
                         icon="ui-icon-disk" />
                         
-         <p:commandButton id="previewButton" value="Preview" action="#{targetCreator.fetchPreviewData}" oncomplete="PF('preview').show()" />                       
+         <p:commandButton id="previewButton" value="Preview" action="#{targetCreator.fetchPreviewData}" update="previewtable" oncomplete="PF('preview').show()" />                       
         </h:panelGrid>
         
         <p:dialog widgetVar="createdisplay" header="New Target" width="200"  
@@ -106,9 +106,19 @@
         </p:dialog>
         
         <p:dialog header="Target Data Preview" widgetVar="preview" showEffect="fade" hideEffect="fade" modal="true">  
-             <p:dataTable id="previewtable" var="_preview" value="#{targetCreator.previewdata}">  
-                   <ui:repeat value="#{targetCreator.previewdata}" var="_preview">#{_preview}</ui:repeat>
-             </p:dataTable>  
+        <!-- 
+             <p:dataTable id="previewtable" value="#{targetCreator.previewdata}" var="previewrecord">  
+                  <p:column> 
+                     <h:outputText value="#{previewrecord}" />
+                  </p:column>
+             </p:dataTable>
+        -->
+        <p:dataTable id="previewtable" value="#{targetCreator.rows}" var="row">
+          <p:columns value="#{targetCreator.columns}" var="column">
+              #{row[column]}
+          </p:columns>
+       </p:dataTable>
+               
         </p:dialog>  
             
 
