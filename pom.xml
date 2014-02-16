@@ -266,6 +266,7 @@
                 <archive>
                  <manifestEntries>
                 <Dependencies>deployment.mailingservice.ear.emailengine.war:main</Dependencies>
+                <Dependencies>org.postgresql</Dependencies>
                 </manifestEntries>
                    </archive>
                 </configuration>

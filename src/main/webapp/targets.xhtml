@@ -83,6 +83,8 @@
             <f:selectItem itemLabel="MySQL" itemValue="mysql" />  
             <f:selectItem itemLabel="PostgreSQL" itemValue="postgresql" /> 
     </p:selectOneMenu> 
+    <h:outputLabel for="dbname" value="Database Name: " />
+    <p:inputText id="dbname" value="#{targetCreator.dbname}" />     
     <h:outputLabel for="dbport" value="Database Port: " />
     <p:inputText id="dbport" value="#{targetCreator.dbport}" />   
     <h:outputLabel for="dbuser" value="Database Username: " />

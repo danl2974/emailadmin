@@ -2,11 +2,13 @@ package com.lambdus.emailengine.admin.data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import java.sql.Connection;
+import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -48,6 +50,8 @@ public class TargetCreator implements Serializable {
     private String dbhost;
     
     private String dbms;
+    
+    private String dbname;
     
     private String dbport;
     
@@ -103,6 +107,14 @@ public class TargetCreator implements Serializable {
     public void setDbms(String dbms) {
         this.dbms = dbms;
     }
+    
+    public String getDbname() {
+        return dbname;
+    }
+
+    public void setDbname(String dbname) {
+        this.dbname = dbname;
+    }    
     
 
     public String getDbport() {
@@ -185,6 +197,11 @@ public class TargetCreator implements Serializable {
     
     public void fetchPreviewData(){
     	
+    	Enumeration<Driver> drivers1 = DriverManager.getDrivers();
+    	while(drivers1.hasMoreElements()){
+    		log.info("First driver check " + (Driver) drivers1.nextElement() );
+    		}
+    	
     	try{
     	  JdbcDriver driver = JdbcDriver.valueOf(this.dbms);
     	  switch(driver)
@@ -202,7 +219,13 @@ public class TargetCreator implements Serializable {
     	ArrayList<String> columnsList = new ArrayList<String>();
     	ArrayList<Map<String, Object>> rowsList = new ArrayList<Map<String, Object>>();
     	try{
-    	String jdbcFormat = String.format("jdbc:%s://%s:%s", this.dbms, this.dbhost, this.dbport);
+    	
+        	Enumeration<Driver> drivers2 = DriverManager.getDrivers();
+        	while(drivers2.hasMoreElements()){
+        		log.info("Second driver check " +  (Driver) drivers2.nextElement() );
+        		}   		
+    		
+    	String jdbcFormat = String.format("jdbc:%s://%s:%s/%s", this.dbms, this.dbhost, this.dbport, this.dbname);
     	Connection con = DriverManager.getConnection(jdbcFormat, this.dbuser, this.dbpassword);
     	Statement stmt = con.createStatement();
     	ResultSet rs = stmt.executeQuery(this.queryText);
