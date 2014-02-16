@@ -179,8 +179,25 @@ public class TargetCreator implements Serializable {
     }
     
     
+    public enum JdbcDriver {
+    	sqlserver, mysql, postgresql
+    }
+    
     public void fetchPreviewData(){
-
+    	
+    	try{
+    	  JdbcDriver driver = JdbcDriver.valueOf(this.dbms);
+    	  switch(driver)
+    	   {
+    	   case sqlserver: Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+    	   break;
+    	   case mysql: Class.forName("com.mysql.jdbc.Driver");
+    	   break;
+    	   case postgresql: Class.forName("org.postgresql.Driver");
+    	   break;
+    	   }
+    	}catch(ClassNotFoundException cnfe){ log.error(cnfe.getMessage());}
+    	
     	ArrayList<String> previewList = new ArrayList<String>();
     	ArrayList<String> columnsList = new ArrayList<String>();
     	ArrayList<Map<String, Object>> rowsList = new ArrayList<Map<String, Object>>();

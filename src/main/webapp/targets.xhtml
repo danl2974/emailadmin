@@ -115,7 +115,7 @@
         -->
         <p:dataTable id="previewtable" value="#{targetCreator.rows}" var="row">
           <p:columns value="#{targetCreator.columns}" var="column">
-              #{row[column]}
+              <h:outputText value="#{row[column]}" />
           </p:columns>
        </p:dataTable>
                
