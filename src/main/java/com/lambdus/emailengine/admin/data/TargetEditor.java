@@ -65,6 +65,8 @@ public class TargetEditor {
     
     private String dbms;
     
+    private String dbname;
+    
     private String dbport;
     
     private String dbuser;
@@ -147,7 +149,16 @@ public class TargetEditor {
         this.target.setdbms(dbms);
         persistenceService.doMerge(target);
     }
-    
+ 
+    public String getDbname() {
+        return dbname;
+    }
+
+    public void setDbname(String dbname) {
+        this.dbname = dbname;
+        this.target.setdbname(dbname);
+        persistenceService.doMerge(target);
+    }    
 
     public String getDbport() {
         return dbport;

@@ -46,6 +46,10 @@ public class Target implements Serializable {
     
     @NotNull
     @NotEmpty
+    private String dbname;    
+    
+    @NotNull
+    @NotEmpty
     private String dbport;
     
     @NotNull
@@ -107,7 +111,14 @@ public class Target implements Serializable {
     public void setdbms(String dbms) {
         this.dbms = dbms;
     }
-    
+
+    public String getdbname() {
+        return dbname;
+    }
+
+    public void setdbname(String dbname) {
+        this.dbname = dbname;
+    }    
 
     public String getdbport() {
         return dbport;

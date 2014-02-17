@@ -266,6 +266,8 @@
                 <archive>
                  <manifestEntries>
                 <Dependencies>deployment.mailingservice.ear.emailengine.war:main</Dependencies>
+                <Dependencies>com.microsoft.sqlserver</Dependencies>
+                <Dependencies>com.mysql</Dependencies>
                 <Dependencies>org.postgresql</Dependencies>
                 </manifestEntries>
                    </archive>

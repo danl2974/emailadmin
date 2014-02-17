@@ -12,6 +12,7 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.annotation.PostConstruct;
@@ -178,6 +179,7 @@ public class TargetCreator implements Serializable {
     	t.setdbhost(this.dbhost);
     	t.setdbms(this.dbms);
     	t.setdbport(this.dbport);
+    	t.setdbname(this.dbname);
     	t.setdbuser(this.dbuser);
     	
     	CredentialSecurityDES csDes = new CredentialSecurityDES();
@@ -196,37 +198,48 @@ public class TargetCreator implements Serializable {
     }
     
     public void fetchPreviewData(){
-    	
+    	/*
     	Enumeration<Driver> drivers1 = DriverManager.getDrivers();
     	while(drivers1.hasMoreElements()){
     		log.info("First driver check " + (Driver) drivers1.nextElement() );
     		}
-    	
+    	*/	
+  	    String jdbcFormat;
+  	    Connection con = null;
     	try{
     	  JdbcDriver driver = JdbcDriver.valueOf(this.dbms);
     	  switch(driver)
     	   {
-    	   case sqlserver: Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+    	   case sqlserver: 
+    		   Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+    	       jdbcFormat = String.format("jdbc:%s://%s:%s;database=%s;user=%s;password=%s;", this.dbms, this.dbhost, this.dbport, this.dbname, this.dbuser, this.dbpassword);
+    	       con = DriverManager.getConnection(jdbcFormat);
     	   break;
-    	   case mysql: Class.forName("com.mysql.jdbc.Driver");
+    	   case mysql: 
+    		   Class.forName("com.mysql.jdbc.Driver");
+    	       jdbcFormat = String.format("jdbc:%s://%s:%s/%s", this.dbms, this.dbhost, this.dbport, this.dbname);
+    	       con = DriverManager.getConnection(jdbcFormat, this.dbuser, this.dbpassword);
     	   break;
-    	   case postgresql: Class.forName("org.postgresql.Driver");
-    	   break;
+    	   case postgresql:
+    		   Class.forName("org.postgresql.Driver");
+    	       jdbcFormat = String.format("jdbc:%s://%s:%s/%s", this.dbms, this.dbhost, this.dbport, this.dbname);
+    	       con = DriverManager.getConnection(jdbcFormat, this.dbuser, this.dbpassword);
+    	    break;
     	   }
-    	}catch(ClassNotFoundException cnfe){ log.error(cnfe.getMessage());}
+    	}
+    	catch(ClassNotFoundException cnfe){ log.error(cnfe.getMessage());}
+    	catch(SQLException sqle){ log.error(sqle.getMessage());}
     	
     	ArrayList<String> previewList = new ArrayList<String>();
     	ArrayList<String> columnsList = new ArrayList<String>();
     	ArrayList<Map<String, Object>> rowsList = new ArrayList<Map<String, Object>>();
     	try{
-    	
+    	/*
         	Enumeration<Driver> drivers2 = DriverManager.getDrivers();
         	while(drivers2.hasMoreElements()){
         		log.info("Second driver check " +  (Driver) drivers2.nextElement() );
         		}   		
-    		
-    	String jdbcFormat = String.format("jdbc:%s://%s:%s/%s", this.dbms, this.dbhost, this.dbport, this.dbname);
-    	Connection con = DriverManager.getConnection(jdbcFormat, this.dbuser, this.dbpassword);
+    	*/	
     	Statement stmt = con.createStatement();
     	ResultSet rs = stmt.executeQuery(this.queryText);
     	
