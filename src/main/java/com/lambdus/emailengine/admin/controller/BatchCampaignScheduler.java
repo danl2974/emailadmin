@@ -147,6 +147,9 @@ public class BatchCampaignScheduler {
 		 campaignController.setTemplateId(this.templateId);
 		 campaignController.startCampaign();
 		 
+		 //Refresh Session
+		 FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		 
 	     }
 	        catch(Exception e){
 	        	log.info("exception with jndi lookup");
@@ -154,6 +157,7 @@ public class BatchCampaignScheduler {
 	        }
 		 
 	}
+	
 	
 	
     public void setTargetId(int targetId)
