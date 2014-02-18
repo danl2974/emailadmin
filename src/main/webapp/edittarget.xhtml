@@ -25,7 +25,7 @@
     <h:outputLabel for="dbhost" value="Database Host: " />
     <p:inputText id="dbhost" value="#{targetEditor.dbhost}" />
     <h:outputLabel for="dbms" value="Database System: " />
-    <p:selectOneMenu value="#{targetEditor.dbms}">  
+    <p:selectOneMenu id="dbms" value="#{targetEditor.dbms}">  
             <f:selectItem itemLabel="Select One" itemValue="" />  
             <f:selectItem itemLabel="MS SQL Server" itemValue="sqlserver" />  
             <f:selectItem itemLabel="MySQL" itemValue="mysql" />  

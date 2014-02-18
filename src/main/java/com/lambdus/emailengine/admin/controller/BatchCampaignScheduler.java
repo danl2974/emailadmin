@@ -48,8 +48,6 @@ import org.quartz.impl.StdSchedulerFactory;
 
 import com.lambdus.emailengine.IBatchCampaignController;
 import com.lambdus.emailengine.admin.schedule.BatchCampaignScheduledJob;
-import com.lambdus.emailengine.reporting.LogDataLoader;
-import com.lambdus.emailengine.reporting.PostfixLogParser;
 
 
 @ManagedBean
@@ -74,9 +72,7 @@ public class BatchCampaignScheduler {
 	
 		
 	public void schedule() {
-         //test line		
-		 LogDataLoader.loadBounceData(PostfixLogParser.processBounce());
-		 
+
 		 Date date = new Date();
 		 Timestamp ts = new Timestamp(date.getTime());
 		 Calendar cal = Calendar.getInstance();

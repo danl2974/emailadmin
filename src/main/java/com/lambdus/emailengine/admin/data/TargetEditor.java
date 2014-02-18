@@ -84,6 +84,7 @@ public class TargetEditor {
         this.targetString = String.valueOf(this.target.getid());
         this.dbhost = t.getdbhost(); 
         this.dbms = t.getdbms();
+        this.dbname = t.getdbname();
         this.dbport = t.getdbport();
         this.dbuser = t.getdbuser();
         
