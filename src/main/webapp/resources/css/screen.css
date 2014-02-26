@@ -10,6 +10,10 @@ campaign-select{
 text-align:left;
 width: 400px;
 }
+.target-data-preview{
+ width:500px;
+ font-size: 0.6em;	
+}
 
 body {
   margin: 0;

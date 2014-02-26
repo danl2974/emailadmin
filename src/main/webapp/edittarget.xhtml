@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
-    xmlns:rich="http://richfaces.org/rich"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:p="http://primefaces.org/ui"
     template="/WEB-INF/templates/default.xhtml">
     <ui:define name="content">
 
-    <h:form id="form">
+    
      <p:menubar>  
         <p:submenu label="Menu">
            <p:menuitem value="Home" url="/" />   
         </p:submenu>
      </p:menubar>
-      
+    
+    <h:form id="edittargetform">  
     <h1>Email Target Editor</h1>
     <h2>ID: <span style="color: #51a96d;">#{targetEditor.targetString}</span></h2>
     
@@ -38,25 +40,49 @@
     <h:outputLabel for="dbuser" value="Database Username: " />
     <p:inputText id="dbuser" value="#{targetEditor.dbuser}" />   
     <h:outputLabel for="dbpassword" value="Database Password: " />
-    <p:inputText id="dbpassword" value="" /> 
+    <p:password id="dbpassword" value="" /> 
     
     <h:outputLabel for="queryText" value="Query Text: " />
     <p:inputTextarea id="queryText" value="#{targetEditor.queryText}" />
     </h:panelGrid>
     
   
-    <h:panelGrid columns="1" style="margin-top:10px">  
-        <p:commandButton id="submitButton" value="Save" update="savedisplay" oncomplete="PF('dlg').show()"  
+    <h:panelGrid columns="1" style="margin-top:10px">   
+       <p:row>
+          
+        <p:column>    
+          <p:commandButton id="submitButton" value="Save" update="savedisplay" oncomplete="PF('dlg').show()"  
                         icon="ui-icon-disk" actionListener="#{timestampBean.current}" />
-         <h:outputText value="#{timestampBean.timestamp}" id="savedisplay" />                
+         <h:outputText value="#{timestampBean.timestamp}" id="savedisplay" /> 
+       </p:column>
+         
+       <p:column>              
+         <p:commandButton id="previewButtonEditor" value="Preview Data" action="#{targetEditor.fetchpreview}" update="previewdtable" oncomplete="PF('previewd').show()" /> 
+       </p:column>
+        
+      </p:row>            
     </h:panelGrid>
      
   
     <p:dialog header="Edit Saved" widgetVar="dlg" showEffect="fade" hideEffect="fade" modal="true">  
-        <h:outputText id="display" value="Template ID #{targetEditor.targetString} edited" escape="false" />
-    </p:dialog>  
+        <h:outputText id="display" value="Template ID #{targetEditor.targetString} edited" escape="false" />    
+     </p:dialog>
+    
+    
+    <p:dialog header="Target Data Preview" widgetVar="previewd" showEffect="fade" hideEffect="fade" modal="true">  
+        <p:dataTable id="previewdtable" value="#{targetEditor.rows}" var="row" styleClass="target-data-preview">
+          <p:columns value="#{targetEditor.columns}" var="column">
+              <f:facet name="header">
+                <h:outputText value="#{column}" />
+              </f:facet>
+              <h:outputText value="#{row[column]}" />
+          </p:columns>
+       </p:dataTable>           
+    </p:dialog>
+    
   
     </h:form>
+        
     
     
     

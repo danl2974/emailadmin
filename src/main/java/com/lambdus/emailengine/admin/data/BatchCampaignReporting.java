@@ -68,9 +68,8 @@ public class BatchCampaignReporting implements Serializable {
     		 for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++)
     		 {
     			 try{
-    			recordMap.put(rs.getMetaData().getColumnName(i), new String(rs.getBytes(i)));
-    			log.info("recordMap: " +  rs.getMetaData().getColumnName(i) + "  " + new String(rs.getBytes(i)) );
-    			 }catch(Exception e){}
+    			     recordMap.put(rs.getMetaData().getColumnName(i), new String(rs.getBytes(i)));
+    			    }catch(Exception e){log.error(e.getMessage());}
     		 }
     		 rowsList.add(recordMap);
     	  }

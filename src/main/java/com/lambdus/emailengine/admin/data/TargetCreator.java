@@ -60,8 +60,6 @@ public class TargetCreator implements Serializable {
     
     private String dbpassword;
     
-    private List<String> previewdata;
-    
     private List<Map<String, Object>> rows;
     
     private List<String> columns;
@@ -145,14 +143,6 @@ public class TargetCreator implements Serializable {
     }
     
     
-    public List<String> getPreviewdata() {
-        return previewdata;
-    }
-
-    public void setPreviewdata(List<String> previewdata) {
-        this.previewdata =  previewdata;
-    }   
-    
     public List<Map<String, Object>> getRows() {
         return rows;
     }
@@ -198,12 +188,7 @@ public class TargetCreator implements Serializable {
     }
     
     public void fetchPreviewData(){
-    	/*
-    	Enumeration<Driver> drivers1 = DriverManager.getDrivers();
-    	while(drivers1.hasMoreElements()){
-    		log.info("First driver check " + (Driver) drivers1.nextElement() );
-    		}
-    	*/	
+
   	    String jdbcFormat;
   	    Connection con = null;
     	try{
@@ -234,12 +219,6 @@ public class TargetCreator implements Serializable {
     	ArrayList<String> columnsList = new ArrayList<String>();
     	ArrayList<Map<String, Object>> rowsList = new ArrayList<Map<String, Object>>();
     	try{
-    	/*
-        	Enumeration<Driver> drivers2 = DriverManager.getDrivers();
-        	while(drivers2.hasMoreElements()){
-        		log.info("Second driver check " +  (Driver) drivers2.nextElement() );
-        		}   		
-    	*/	
     	Statement stmt = con.createStatement();
     	ResultSet rs = stmt.executeQuery(this.queryText);
     	
@@ -265,10 +244,9 @@ public class TargetCreator implements Serializable {
     	}
     	}catch(Exception e){ log.info(e.getMessage());}	 
     	 
-    	this.previewdata = (List<String>) previewList;
     	this.columns = (List<String>) columnsList;
     	this.rows = (List<Map<String, Object>>) rowsList;
-    	log.info("MAP " + this.rows.size() + "  " + this.previewdata.size());
+    	
     }
     
 }

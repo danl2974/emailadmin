@@ -104,7 +104,7 @@
          </p:column>
           
          <p:column>              
-         <p:commandButton id="previewButton" value="Preview" action="#{targetCreator.fetchPreviewData}" update="previewtable" oncomplete="PF('preview').show()" /> 
+         <p:commandButton id="previewButton" value="Preview Data" action="#{targetCreator.fetchPreviewData}" update="previewtable" oncomplete="PF('preview').show()" /> 
          </p:column>
            
          </p:row>                     
@@ -116,15 +116,12 @@
         </p:dialog>
         
         <p:dialog header="Target Data Preview" widgetVar="preview" showEffect="fade" hideEffect="fade" modal="true">  
-        <!-- 
-             <p:dataTable id="previewtable" value="#{targetCreator.previewdata}" var="previewrecord">  
-                  <p:column> 
-                     <h:outputText value="#{previewrecord}" />
-                  </p:column>
-             </p:dataTable>
-        -->
-        <p:dataTable id="previewtable" value="#{targetCreator.rows}" var="row">
+
+        <p:dataTable id="previewtable" value="#{targetCreator.rows}" var="row" styleClass="target-data-preview">
           <p:columns value="#{targetCreator.columns}" var="column">
+              <f:facet name="header">
+                <h:outputText value="#{column}" />
+              </f:facet>
               <h:outputText value="#{row[column]}" />
           </p:columns>
        </p:dataTable>

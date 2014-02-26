@@ -2,29 +2,21 @@ package com.lambdus.emailengine.admin.data;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.ejb.Stateful;
-import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
-import javax.ejb.TransactionManagement;
-import javax.ejb.TransactionManagementType;
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.event.Observes;
-import javax.enterprise.event.Reception;
-import javax.enterprise.inject.Produces;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
+
 import javax.servlet.http.HttpServletRequest;
 
+import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,11 +26,13 @@ import com.lambdus.emailengine.admin.model.Template;
 import com.lambdus.emailengine.admin.service.PersistenceService;
 import com.lambdus.emailengine.admin.service.TemplateAddition;
 
+import com.lambdus.emailengine.CredentialSecurityDES;
+
 import org.jboss.logging.Logger;
 
 @ManagedBean(name = "targetEditor")
 @ViewScoped
-public class TargetEditor {
+public class TargetEditor implements Serializable {
 	
 	private static final Logger log = Logger.getLogger(TargetEditor.class.getName());
 
@@ -48,7 +42,8 @@ public class TargetEditor {
     @Inject
     private FacesContext facesContext;
     
-    @EJB
+    //@EJB
+    @Inject
     private PersistenceService persistenceService;
     
     private String name;
@@ -71,6 +66,12 @@ public class TargetEditor {
     
     private String dbuser;
     
+    private String pass;
+    
+    private List<Map<String, Object>> rows;
+    
+    private List<String> columns;
+    
 
     @PostConstruct
     public void  fetchTargetById() {
@@ -87,6 +88,7 @@ public class TargetEditor {
         this.dbname = t.getdbname();
         this.dbport = t.getdbport();
         this.dbuser = t.getdbuser();
+        this.pass = t.getdbpassword();
         
     }
  
@@ -181,5 +183,97 @@ public class TargetEditor {
         this.target.setdbuser(dbuser);
         persistenceService.doMerge(target);
     }
+    
+ 
+    
+    public List<Map<String, Object>> getRows() {
+        return rows;
+    }
+
+    public void setRows(List<Map<String, Object>> rows) {
+        this.rows =  rows;
+    }  
+    
+    public List<String> getColumns() {
+        return columns;
+    }
+
+    public void setColumns(List<String> columns) {
+        this.columns =  columns;
+    }    
+    
+    
+    public enum JdbcDriver {
+    	sqlserver, mysql, postgresql
+    }   
+    
+    public void fetchpreview(){
+
+    	log.info("called fetchPreview in TargetEditor");
+  	    String jdbcFormat;
+  	    Connection con = null;
+ 
+  	    CredentialSecurityDES csDes = null;
+		try {
+			csDes = new CredentialSecurityDES();
+		} catch (Exception e) {
+			e.getMessage();
+		}
+    	try{
+    	  JdbcDriver driver = JdbcDriver.valueOf(this.dbms);
+    	  switch(driver)
+    	   {
+    	   case sqlserver: 
+    		   Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+    	       jdbcFormat = String.format("jdbc:%s://%s:%s;database=%s;user=%s;password=%s;", this.dbms, this.dbhost, this.dbport, this.dbname, this.dbuser, csDes.decrypt(this.pass));
+    	       con = DriverManager.getConnection(jdbcFormat);
+    	   break;
+    	   case mysql: 
+    		   Class.forName("com.mysql.jdbc.Driver");
+    	       jdbcFormat = String.format("jdbc:%s://%s:%s/%s", this.dbms, this.dbhost, this.dbport, this.dbname);
+    	       con = DriverManager.getConnection(jdbcFormat, this.dbuser, csDes.decrypt(this.pass));
+    	   break;
+    	   case postgresql:
+    		   Class.forName("org.postgresql.Driver");
+    	       jdbcFormat = String.format("jdbc:%s://%s:%s/%s", this.dbms, this.dbhost, this.dbport, this.dbname);
+    	       con = DriverManager.getConnection(jdbcFormat, this.dbuser, csDes.decrypt(this.pass));
+    	    break;
+    	   }
+    	}
+    	catch(ClassNotFoundException cnfe){ log.error(cnfe.getMessage());}
+    	catch(SQLException sqle){ log.error(sqle.getMessage());}
+    	
+    	ArrayList<String> columnsList = new ArrayList<String>();
+    	ArrayList<Map<String, Object>> rowsList = new ArrayList<Map<String, Object>>();
+    	try{
+    	Statement stmt = con.createStatement();
+    	ResultSet rs = stmt.executeQuery(this.queryText);
+    	
+    	ResultSetMetaData rsmd = rs.getMetaData();
+    	
+    	for(int j = 1; j <= rsmd.getColumnCount(); j++ ){
+    		columnsList.add(rsmd.getColumnName(j));
+    	}
+
+    	int counter = 0;
+    	
+    	while (rs.next() && counter <= 20) {
+
+    		 HashMap<String, Object> recordMap = new HashMap<String, Object>();
+    		 for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++)
+    		 {
+    			recordMap.put(rs.getMetaData().getColumnName(i), new String(rs.getBytes(i)));
+    		 }
+    		 rowsList.add(recordMap);
+    		 counter ++;
+    	}
+    	}catch(Exception e){ log.info(e.getMessage());}	 
+    	 
+    	this.columns = (List<String>) columnsList;
+    	this.rows = (List<Map<String, Object>>) rowsList;
+    	
+    }    
+    
+    
     
 }
