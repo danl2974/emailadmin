@@ -77,7 +77,8 @@ public class BatchCampaignScheduler {
 		 Timestamp ts = new Timestamp(date.getTime());
 		 Calendar cal = Calendar.getInstance();
 		 cal.setTime(this.scheduledStart);
-		 cal.add(Calendar.HOUR_OF_DAY, 5);
+		 //Timezone offset for UTC config machine
+		 //cal.add(Calendar.HOUR_OF_DAY, 5);
 		 Date utcScheduleStart = cal.getTime();
 		 
 		 log.info("Timestamp " + ts);

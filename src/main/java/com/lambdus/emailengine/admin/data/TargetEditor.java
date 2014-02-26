@@ -191,6 +191,8 @@ public class TargetEditor implements Serializable {
 
     public void setDbpassword(String dbpassword) {
         this.dbpassword = dbpassword;
+        this.target.setdbpassword(encryptPw(dbpassword));
+        persistenceService.doMerge(target);
     }
     
     public List<Map<String, Object>> getRows() {
@@ -284,5 +286,19 @@ public class TargetEditor implements Serializable {
     }    
     
     
+    private String encryptPw(String pw){
+    	
+    	CredentialSecurityDES csDes = null;
+    	String encPw = null;
+        try {
+			csDes = new CredentialSecurityDES();
+			encPw = csDes.encrypt(pw);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			return encPw;
+		}
+        return encPw;
+        		
+    }
     
 }
