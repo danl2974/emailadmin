@@ -88,7 +88,7 @@ public class TargetEditor implements Serializable {
         this.dbname = t.getdbname();
         this.dbport = t.getdbport();
         this.dbuser = t.getdbuser();
-        this.dbpassword = t.getdbpassword();
+        this.dbpassword = "";
         log.info("db pw: " + this.dbpassword);
         
     }
@@ -219,7 +219,7 @@ public class TargetEditor implements Serializable {
 
   	    String jdbcFormat;
   	    Connection con = null;
- 
+        /*
   	    CredentialSecurityDES csDes = null;
 		try {
 			csDes = new CredentialSecurityDES();
@@ -227,24 +227,25 @@ public class TargetEditor implements Serializable {
 		} catch (Exception e) {
 			e.getMessage();
 		}
+		*/
     	try{
     	  JdbcDriver driver = JdbcDriver.valueOf(this.dbms);
     	  switch(driver)
     	   {
     	   case sqlserver: 
     		   Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-    	       jdbcFormat = String.format("jdbc:%s://%s:%s;database=%s;user=%s;password=%s;", this.dbms, this.dbhost, this.dbport, this.dbname, this.dbuser, csDes.decrypt(this.dbpassword));
+    	       jdbcFormat = String.format("jdbc:%s://%s:%s;database=%s;user=%s;password=%s;", this.dbms, this.dbhost, this.dbport, this.dbname, this.dbuser, this.dbpassword);
     	       con = DriverManager.getConnection(jdbcFormat);
     	   break;
     	   case mysql: 
     		   Class.forName("com.mysql.jdbc.Driver");
     	       jdbcFormat = String.format("jdbc:%s://%s:%s/%s", this.dbms, this.dbhost, this.dbport, this.dbname);
-    	       con = DriverManager.getConnection(jdbcFormat, this.dbuser, csDes.decrypt(this.dbpassword));
+    	       con = DriverManager.getConnection(jdbcFormat, this.dbuser, this.dbpassword);
     	   break;
     	   case postgresql:
     		   Class.forName("org.postgresql.Driver");
     	       jdbcFormat = String.format("jdbc:%s://%s:%s/%s", this.dbms, this.dbhost, this.dbport, this.dbname);
-    	       con = DriverManager.getConnection(jdbcFormat, this.dbuser, csDes.decrypt(this.dbpassword));
+    	       con = DriverManager.getConnection(jdbcFormat, this.dbuser, this.dbpassword);
     	    break;
     	   }
     	}
