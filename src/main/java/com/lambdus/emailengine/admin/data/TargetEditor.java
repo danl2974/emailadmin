@@ -66,7 +66,7 @@ public class TargetEditor implements Serializable {
     
     private String dbuser;
     
-    private String pass;
+    private String dbpassword;
     
     private List<Map<String, Object>> rows;
     
@@ -88,7 +88,8 @@ public class TargetEditor implements Serializable {
         this.dbname = t.getdbname();
         this.dbport = t.getdbport();
         this.dbuser = t.getdbuser();
-        this.pass = t.getdbpassword();
+        this.dbpassword = t.getdbpassword();
+        log.info("db pw: " + this.dbpassword);
         
     }
  
@@ -184,7 +185,13 @@ public class TargetEditor implements Serializable {
         persistenceService.doMerge(target);
     }
     
- 
+    public String getDbpassword() {
+        return dbpassword;
+    }
+
+    public void setDbpassword(String dbpassword) {
+        this.dbpassword = dbpassword;
+    }
     
     public List<Map<String, Object>> getRows() {
         return rows;
@@ -210,13 +217,13 @@ public class TargetEditor implements Serializable {
     
     public void fetchpreview(){
 
-    	log.info("called fetchPreview in TargetEditor");
   	    String jdbcFormat;
   	    Connection con = null;
  
   	    CredentialSecurityDES csDes = null;
 		try {
 			csDes = new CredentialSecurityDES();
+			log.info("called fetchPreview in TargetEditor decryptpw: " + csDes.decrypt(this.dbpassword));
 		} catch (Exception e) {
 			e.getMessage();
 		}
@@ -226,18 +233,18 @@ public class TargetEditor implements Serializable {
     	   {
     	   case sqlserver: 
     		   Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-    	       jdbcFormat = String.format("jdbc:%s://%s:%s;database=%s;user=%s;password=%s;", this.dbms, this.dbhost, this.dbport, this.dbname, this.dbuser, csDes.decrypt(this.pass));
+    	       jdbcFormat = String.format("jdbc:%s://%s:%s;database=%s;user=%s;password=%s;", this.dbms, this.dbhost, this.dbport, this.dbname, this.dbuser, csDes.decrypt(this.dbpassword));
     	       con = DriverManager.getConnection(jdbcFormat);
     	   break;
     	   case mysql: 
     		   Class.forName("com.mysql.jdbc.Driver");
     	       jdbcFormat = String.format("jdbc:%s://%s:%s/%s", this.dbms, this.dbhost, this.dbport, this.dbname);
-    	       con = DriverManager.getConnection(jdbcFormat, this.dbuser, csDes.decrypt(this.pass));
+    	       con = DriverManager.getConnection(jdbcFormat, this.dbuser, csDes.decrypt(this.dbpassword));
     	   break;
     	   case postgresql:
     		   Class.forName("org.postgresql.Driver");
     	       jdbcFormat = String.format("jdbc:%s://%s:%s/%s", this.dbms, this.dbhost, this.dbport, this.dbname);
-    	       con = DriverManager.getConnection(jdbcFormat, this.dbuser, csDes.decrypt(this.pass));
+    	       con = DriverManager.getConnection(jdbcFormat, this.dbuser, csDes.decrypt(this.dbpassword));
     	    break;
     	   }
     	}
