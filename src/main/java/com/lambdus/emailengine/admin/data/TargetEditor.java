@@ -205,7 +205,8 @@ public class TargetEditor implements Serializable {
     
     public enum JdbcDriver {
     	sqlserver, mysql, postgresql
-    }   
+    }
+    
     
     public void fetchpreview(){
 
