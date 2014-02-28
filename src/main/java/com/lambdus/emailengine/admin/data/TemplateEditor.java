@@ -35,13 +35,7 @@ import com.lambdus.emailengine.admin.service.TemplateAddition;
 import org.jboss.logging.Logger;
 
 @ManagedBean(name = "templateEditor")
-//@RequestScoped
-//@SessionScoped
 @ViewScoped
-//@Stateful
-//@Stateless
-//@TransactionManagement(TransactionManagementType.CONTAINER)
-//@TransactionManagement(TransactionManagementType.BEAN)
 public class TemplateEditor {
 	
 	private static final Logger log = Logger.getLogger(TemplateEditor.class.getName());

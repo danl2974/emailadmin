@@ -90,6 +90,7 @@ public class TemplateCreator implements Serializable {
     	t.setfromname(this.fromname);
     	t.setfromaddress(this.fromaddress);
     	t.setsubjectline(this.subjectline);
+    	t.setdomain(this.domain);
     	templateAddition.persistTemplate(t);
     	}
     	 catch (Exception e) {
