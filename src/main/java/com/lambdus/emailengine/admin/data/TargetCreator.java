@@ -64,6 +64,8 @@ public class TargetCreator implements Serializable {
     
     private List<String> columns;
     
+    private int count;
+    
     
     public String getName(){
     	return name;
@@ -158,6 +160,14 @@ public class TargetCreator implements Serializable {
     public void setColumns(List<String> columns) {
         this.columns =  columns;
     } 
+    
+    public int getCount(){
+    	return count;
+    }
+    
+    public void setCount(int count){
+    	this.count = count;
+    }
      
     
     public void addNew(){
@@ -191,6 +201,7 @@ public class TargetCreator implements Serializable {
 
   	    String jdbcFormat;
   	    Connection con = null;
+  	    int size = 0;
     	try{
     	  JdbcDriver driver = JdbcDriver.valueOf(this.dbms);
     	  switch(driver)
@@ -228,9 +239,9 @@ public class TargetCreator implements Serializable {
     		columnsList.add(rsmd.getColumnName(j));
     	}
 
-    	int counter = 0;
     	
-    	while (rs.next() && counter <= 20) {
+    	while (rs.next()) {
+    		 if(size <= 20){
     		 String record = "";
     		 HashMap<String, Object> recordMap = new HashMap<String, Object>();
     		 for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++)
@@ -240,14 +251,21 @@ public class TargetCreator implements Serializable {
     		 }
     		 previewList.add(record);
     		 rowsList.add(recordMap);
-    		 counter ++;
+    	     }
+    		 size ++;
     	}
+    	
+    	con.close();
+    	
     	}catch(Exception e){ log.info(e.getMessage());}	 
     	 
+    	this.count = size;
     	this.columns = (List<String>) columnsList;
     	this.rows = (List<Map<String, Object>>) rowsList;
     	
     }
+    
+
     
 }
 

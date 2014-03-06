@@ -72,6 +72,8 @@ public class TargetEditor implements Serializable {
     
     private List<String> columns;
     
+    private int count;
+    
 
     @PostConstruct
     public void  fetchTargetById() {
@@ -89,7 +91,6 @@ public class TargetEditor implements Serializable {
         this.dbport = t.getdbport();
         this.dbuser = t.getdbuser();
         this.dbpassword = "";
-        log.info("db pw: " + this.dbpassword);
         
     }
  
@@ -209,7 +210,15 @@ public class TargetEditor implements Serializable {
 
     public void setColumns(List<String> columns) {
         this.columns =  columns;
-    }    
+    }  
+    
+    public int getCount(){
+    	return count;
+    }
+    
+    public void setCount(int count){
+    	this.count = count;
+    }
     
     
     public enum JdbcDriver {
@@ -221,6 +230,7 @@ public class TargetEditor implements Serializable {
 
   	    String jdbcFormat;
   	    Connection con = null;
+  	    int size = 0;
         /*
   	    CredentialSecurityDES csDes = null;
 		try {
@@ -260,26 +270,30 @@ public class TargetEditor implements Serializable {
     	Statement stmt = con.createStatement();
     	ResultSet rs = stmt.executeQuery(this.queryText);
     	
+    	
     	ResultSetMetaData rsmd = rs.getMetaData();
     	
     	for(int j = 1; j <= rsmd.getColumnCount(); j++ ){
     		columnsList.add(rsmd.getColumnName(j));
     	}
-
-    	int counter = 0;
     	
-    	while (rs.next() && counter <= 20) {
-
+    	while (rs.next()) {
+             if(size <= 20){
     		 HashMap<String, Object> recordMap = new HashMap<String, Object>();
     		 for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++)
     		 {
     			recordMap.put(rs.getMetaData().getColumnName(i), new String(rs.getBytes(i)));
     		 }
     		 rowsList.add(recordMap);
-    		 counter ++;
-    	}
+             }
+    		 size ++;
+    	}    
+    	
+    	con.close();
+    	
     	}catch(Exception e){ log.info(e.getMessage());}	 
-    	 
+    	
+    	this.count = size;
     	this.columns = (List<String>) columnsList;
     	this.rows = (List<Map<String, Object>>) rowsList;
     	
@@ -300,5 +314,7 @@ public class TargetEditor implements Serializable {
         return encPw;
         		
     }
+ 
+ 
     
 }

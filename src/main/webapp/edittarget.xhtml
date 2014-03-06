@@ -71,6 +71,10 @@
     
     <p:dialog header="Target Data Preview" widgetVar="previewd" showEffect="fade" hideEffect="fade" modal="true">  
         <p:dataTable id="previewdtable" value="#{targetEditor.rows}" var="row" styleClass="target-data-preview">
+
+        <f:facet name="header">  
+            Target Size: #{targetEditor.count} 
+        </f:facet>  
           <p:columns value="#{targetEditor.columns}" var="column">
               <f:facet name="header">
                 <h:outputText value="#{column}" />
