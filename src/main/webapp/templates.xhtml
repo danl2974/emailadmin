@@ -95,7 +95,8 @@
         </h:panelGrid>
         
         <p:dialog widgetVar="createdisplay" header="New Template" width="200"  
-        resizable="false" showEffect="clip" hideEffect="clip">  
+        resizable="false" showEffect="clip" hideEffect="clip">
+             <p:ajax event="close" listener="#{templateCreator.handleDialogClose}"/>   
              <h:outputText value="New Template Created" id="createdisplay" /> 
         </p:dialog>
             

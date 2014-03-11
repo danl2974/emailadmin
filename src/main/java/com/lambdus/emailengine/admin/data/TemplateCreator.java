@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 
@@ -97,4 +98,12 @@ public class TemplateCreator implements Serializable {
     		 log.info(e.getMessage());
     	 }
     }
+    
+    
+    public void handleDialogClose(){ 
+    	try{
+           FacesContext.getCurrentInstance().getExternalContext().redirect("/admin/templates.jsf");
+    	}catch(Exception e){}
+      }    
+    
 }

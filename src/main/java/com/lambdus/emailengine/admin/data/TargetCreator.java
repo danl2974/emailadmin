@@ -19,6 +19,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
@@ -266,6 +267,11 @@ public class TargetCreator implements Serializable {
     }
     
 
+    public void handleDialogClose(){ 
+    	try{
+           FacesContext.getCurrentInstance().getExternalContext().redirect("/admin/targets.jsf");
+    	}catch(Exception e){}
+      }
     
 }
 

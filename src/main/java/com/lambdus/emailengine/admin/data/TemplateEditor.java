@@ -143,5 +143,11 @@ public class TemplateEditor {
         this.template.setdomain(domain);
         templateAddition.doMerge(template);
     	}
+   
+    public void handleDialogClose(){ 
+    	try{
+           FacesContext.getCurrentInstance().getExternalContext().redirect("/admin/templates.jsf");
+    	}catch(Exception e){}
+      }
     
 }

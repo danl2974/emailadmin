@@ -201,6 +201,14 @@ public class BatchCampaignScheduler {
     	this.scheduledStart = date;
     }
 
+    
+    public void handleDialogClose(){ 
+    	try{
+           FacesContext.getCurrentInstance().getExternalContext().redirect("/admin/reporting.jsf");
+    	}catch(Exception e){}
+      }       
+    
+    
 }
 
 

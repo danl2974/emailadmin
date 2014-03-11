@@ -315,6 +315,11 @@ public class TargetEditor implements Serializable {
         		
     }
  
- 
+
+    public void handleDialogClose(){ 
+    	try{
+           FacesContext.getCurrentInstance().getExternalContext().redirect("/admin/targets.jsf");
+    	}catch(Exception e){}
+      }
     
 }

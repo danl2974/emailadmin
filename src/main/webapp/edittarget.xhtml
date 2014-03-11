@@ -65,7 +65,8 @@
      
   
     <p:dialog header="Edit Saved" widgetVar="dlg" showEffect="fade" hideEffect="fade" modal="true">  
-        <h:outputText id="display" value="Template ID #{targetEditor.targetString} edited" escape="false" />    
+        <p:ajax event="close" listener="#{targetEditor.handleDialogClose}"/> 
+        <h:outputText id="display" value="Target ID #{targetEditor.targetString} edited" escape="false" />    
      </p:dialog>
     
     

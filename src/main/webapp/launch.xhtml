@@ -29,7 +29,9 @@
         
      </h:panelGrid>   
  
-     <p:dialog header="Mailing scheduled" widgetVar="dlg" showEffect="fade" hideEffect="fade" modal="true">  
+     <p:dialog header="Mailing scheduled" widgetVar="dlg" showEffect="fade" hideEffect="fade" modal="true">
+        <p:ajax event="close" listener="#{batchCampaignScheduler.handleDialogClose}"/> 
+       
         <h:outputText id="display1" value="Template ID: #{batchCampaignScheduler.templateId}  Target ID: #{batchCampaignScheduler.targetId}" escape="false" />
         <br/>
         <h:outputText id="display2" value="Scheduled time: #{batchCampaignScheduler.scheduledStart}" escape="false" />

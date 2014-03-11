@@ -30,13 +30,15 @@
     <p:editor id="editor" value="#{templateEditor.creative}" height="500" width="775"/>  
   
     <h:panelGrid columns="1" style="margin-top:10px">  
-        <p:commandButton id="submitButton" value="Save" update="savedisplay" oncomplete="PF('dlg').show()"  
+        <p:commandButton id="submitButton" value="Save" update="savedisplay,display" oncomplete="PF('dlg').show()"  
                         icon="ui-icon-disk" actionListener="#{timestampBean.current}" />
          <h:outputText value="#{timestampBean.timestamp}" id="savedisplay" />                
     </h:panelGrid>
      
   
-    <p:dialog header="Template ID #{templateEditor.templateString} Saved" widgetVar="dlg" showEffect="fade" hideEffect="fade" modal="true">  
+    <p:dialog header="Template ID #{templateEditor.templateString} Saved" widgetVar="dlg" showEffect="fade" hideEffect="fade" modal="true">
+       <p:ajax event="close" listener="#{templateEditor.handleDialogClose}"/> 
+      
         <h:outputText id="display" value="#{templateEditor.creative}" escape="false" />
     </p:dialog>  
   

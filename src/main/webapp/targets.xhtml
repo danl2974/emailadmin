@@ -111,7 +111,8 @@
         </h:panelGrid>
         
         <p:dialog widgetVar="createdisplay" header="New Target" width="200"  
-        resizable="false" showEffect="clip" hideEffect="clip">  
+        resizable="false" showEffect="clip" hideEffect="clip">
+             <p:ajax event="close" listener="#{targetCreator.handleDialogClose}"/>   
              <h:outputText value="New Target Created" id="createdisplay" /> 
         </p:dialog>
         
