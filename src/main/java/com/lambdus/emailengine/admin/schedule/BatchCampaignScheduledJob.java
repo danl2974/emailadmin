@@ -1,7 +1,10 @@
 package com.lambdus.emailengine.admin.schedule;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.List;
+import java.util.Set;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -27,7 +30,7 @@ public class BatchCampaignScheduledJob implements Job {
 	    JobKey jobKey = context.getJobDetail().getKey();
 	    JobDataMap jdm = context.getJobDetail().getJobDataMap();
 	    
-	    log.info("Job: " + jobKey + " executing at " + new Date() + "Job Data " + jdm.getInt("targetId") + " " + jdm.getInt("templateId") );
+	    //log.info("Job: " + jobKey + " executing at " + new Date() + "Job Data " + jdm.getInt("targetId") + " " + jdm.getInt("templateId") );
 	    
 	    final Hashtable jndiProperties = new Hashtable();
         jndiProperties.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
@@ -36,8 +39,21 @@ public class BatchCampaignScheduledJob implements Job {
             String jndi = "ejb:mailingservice/admin//BatchCampaignController!com.lambdus.emailengine.IBatchCampaignController?stateful";
             IBatchCampaignController campaignController = (IBatchCampaignController) ejbContext.lookup(jndi);
         
-            campaignController.setTargetId(jdm.getInt("targetId"));
+            //campaignController.setTargetId(jdm.getInt("targetId"));
+            //campaignController.setTargetIds((List<Integer>) jdm.get("targetIds"));
 	        campaignController.setTemplateId(jdm.getInt("templateId"));
+	        
+	        Set<String> keys = jdm.keySet();
+	        ArrayList<Integer> targetlist = new ArrayList<Integer>();
+	        for (String k : keys){
+	        	if (k.indexOf("targetId") != -1){
+	        		targetlist.add(Integer.valueOf(jdm.getString(k)));
+	        	}
+	        }
+	        
+	        
+	        campaignController.setTargetIds((List<Integer>) targetlist);
+	        
 	        campaignController.startCampaign();
 	        
 	        context.getScheduler().shutdown();

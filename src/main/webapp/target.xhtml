@@ -19,11 +19,13 @@
     <h:form id="targetform">
     <h:panelGrid columns="2" cellpadding="5" style="margin-bottom:10px">
     
-    <h:outputText value="Select Target: " />  
-        <p:selectOneMenu value="#{batchCampaignScheduler.targetId}" id="selectedTarget">  
-            <f:selectItem itemLabel="Select One" itemValue="" styleClass="campaign-select" />  
-            <f:selectItems value="#{targetList.targets}" var="_target" itemLabel="#{_target.id}  |  #{_target.name}  |  #{_target.association}" itemValue="#{_target.id}" />  
-        </p:selectOneMenu>  
+    <h:outputText value="Select Target: " />
+
+        
+        <p:selectCheckboxMenu value="#{batchCampaignScheduler.targetIds}" id="selectedTargets" label="Available Targets" filter="true" filterText="Filter" filterMatchMode="startsWith" panelStyle="width:420px">
+             
+            <f:selectItems value="#{targetList.targets}" var="_target" itemLabel="#{_target.id}  |  #{_target.name}  |  #{_target.association}" itemValue="#{_target.id}" />
+        </p:selectCheckboxMenu>
         
     </h:panelGrid>
       

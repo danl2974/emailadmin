@@ -66,12 +66,15 @@ public class BatchCampaignScheduler {
 	
 	private int targetId;
 	
+	private List<Integer> targetIds;
+	
 	private Date scheduledStart;
 	
 	private String status = "";
 	
 		
 	public void schedule() {
+		
 
 		 Date date = new Date();
 		 Timestamp ts = new Timestamp(date.getTime());
@@ -93,8 +96,12 @@ public class BatchCampaignScheduler {
 		 
 		 JobDataMap jmd = job.getJobDataMap();
 		 jmd.put("templateId", templateId);
-		 jmd.put("targetId", targetId);
-
+		 
+		 for (int i = 0 ; i < targetIds.size(); i++)
+		 {
+			 jmd.put(String.format("targetId%d", i+1), targetIds.get(i));
+		 }
+         
 	     SimpleTrigger trigger = (SimpleTrigger) TriggerBuilder.newTrigger()
 				    .withIdentity("trigger" + ts, "admin")
 				    .startAt(utcScheduleStart)
@@ -112,52 +119,52 @@ public class BatchCampaignScheduler {
 		 catch (Exception e){
 			 log.info(e.getMessage());
 		 }
-		 
+	
 		 //start();
 		 
 	}
 	
 	private void start(){
-		
-		    Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		    String datestr = formatter.format(this.scheduledStart);	
-		    log.info(String.format("Start called with template %s and target %s and date %s", this.templateId, this.targetId, datestr));
-		 
-		    final Hashtable jndiProperties = new Hashtable();
-	        jndiProperties.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
-	        try{
-	        final Context context = new InitialContext(jndiProperties);
-	        String jndi = "ejb:mailingservice/admin//BatchCampaignController!com.lambdus.emailengine.IBatchCampaignController?stateful";
-	        //String jndi = "java:global/mailingservice/admin/BatchCampaignController!com.lambdus.emailengine.IBatchCampaignController";
-	        IBatchCampaignController campaignController = (IBatchCampaignController) context.lookup(jndi);
-	        
-	        log.info("Call after JNDI remote bean lookup");
-		 
-		 /*
-		 Properties env = new Properties();  
-		    env.put(Context.INITIAL_CONTEXT_FACTORY, "org.jboss.naming.remote.client.InitialContextFactory");  
-		    env.put(Context.PROVIDER_URL, "remote://localhost:4447");  
-		    env.put(Context.SECURITY_PRINCIPAL, "jboss");  
-		    env.put(Context.SECURITY_CREDENTIALS, "lambdus2200");  
-		    env.put("jboss.naming.client.ejb.context", true); 
-		 */
-		 
-		 //InitialContext ctx = new InitialContext(env);
-		 //BatchCampaignController campaignController = (BatchCampaignController) ctx.lookup("java:global/emailengine/BatchCampaignController");
-		 campaignController.setTargetId(this.targetId);
-		 campaignController.setTemplateId(this.templateId);
-		 campaignController.startCampaign();
-		 
-		 //Refresh Session
-		 FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-		 
-	     }
-	        catch(Exception e){
-	        	log.info("exception with jndi lookup");
-	        	log.error(e.getMessage());
-	        }
-		 
-	}
+
+	    Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	    String datestr = formatter.format(this.scheduledStart);	
+	    log.info(String.format("Start called with template %s and target %s and date %s", this.templateId, this.targetId, datestr));
+
+	    final Hashtable jndiProperties = new Hashtable();
+        jndiProperties.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
+        try{
+        final Context context = new InitialContext(jndiProperties);
+        String jndi = "ejb:mailingservice/admin//BatchCampaignController!com.lambdus.emailengine.IBatchCampaignController?stateful";
+        //String jndi = "java:global/mailingservice/admin/BatchCampaignController!com.lambdus.emailengine.IBatchCampaignController";
+        IBatchCampaignController campaignController = (IBatchCampaignController) context.lookup(jndi);
+
+        log.info("Call after JNDI remote bean lookup");
+
+	 /*
+	 Properties env = new Properties();  
+	    env.put(Context.INITIAL_CONTEXT_FACTORY, "org.jboss.naming.remote.client.InitialContextFactory");  
+	    env.put(Context.PROVIDER_URL, "remote://localhost:4447");  
+	    env.put(Context.SECURITY_PRINCIPAL, "jboss");  
+	    env.put(Context.SECURITY_CREDENTIALS, "lambdus2200");  
+	    env.put("jboss.naming.client.ejb.context", true); 
+	 */
+
+	 //InitialContext ctx = new InitialContext(env);
+	 //BatchCampaignController campaignController = (BatchCampaignController) ctx.lookup("java:global/emailengine/BatchCampaignController");
+	 campaignController.setTargetId(this.targetId);
+	 campaignController.setTemplateId(this.templateId);
+	 campaignController.startCampaign();
+
+	 //Refresh Session
+	 FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+
+     }
+        catch(Exception e){
+        	log.info("exception with jndi lookup");
+        	log.error(e.getMessage());
+        }
+
+}
 	
 	
 	
@@ -199,6 +206,17 @@ public class BatchCampaignScheduler {
     public void setScheduledStart(Date date)
     {
     	this.scheduledStart = date;
+    }
+    
+    
+    public void setTargetIds(List<Integer> targetIds)
+    {
+            this.targetIds = targetIds;
+    }
+    
+    public List<Integer> getTargetIds()
+    {
+            return this.targetIds;
     }
 
     

@@ -106,6 +106,14 @@ form {
   width: 90%;
   border: 2px solid #D5D5D5;
 }
+
+
+label{
+font-size: 14px;
+font-weight: bold;
+color:#363636;
+}
+/*
 label {
   float: left;
   margin-left: 20px;
@@ -121,6 +129,7 @@ input {
   width: 500px;
   float: left;
 }
+*/
 textarea {
   width: 500px;
   height: 500px;

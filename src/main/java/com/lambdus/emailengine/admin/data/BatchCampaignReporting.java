@@ -69,7 +69,7 @@ public class BatchCampaignReporting implements Serializable {
     		 {
     			 try{
     			     recordMap.put(rs.getMetaData().getColumnName(i), new String(rs.getBytes(i)));
-    			    }catch(Exception e){log.error(e.getMessage());}
+    			    }catch(Exception e){}
     		 }
     		 rowsList.add(recordMap);
     	  }

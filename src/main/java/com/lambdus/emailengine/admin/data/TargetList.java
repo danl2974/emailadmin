@@ -1,6 +1,8 @@
 package com.lambdus.emailengine.admin.data;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -23,6 +25,8 @@ public class TargetList {
 
 	private List<Target> targets;
 	
+	private Map<String,Integer> targetsmap; 
+	
 	private Target selectedTarget;  
 	
     public List<Target> getTargets() {
@@ -41,7 +45,18 @@ public class TargetList {
     @PostConstruct
     public void  retrieveAllTargets() {    	
     	targets = targetRepository.findAllOrderedById();
+    	
+    	targetsmap = new HashMap<String, Integer>();
+    	for (Target t : this.targets){
+    	   targetsmap.put(String.valueOf(t.getid()) + " | " + t.getname() + " | " + t.getassociation(), t.getid());
+     	 }
     }
+    
+    
+    public Map<String,Integer> getTargetsmap() {
+        return targetsmap;
+    }
+    
 
 
 }
