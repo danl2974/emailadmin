@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    template="/WEB-INF/templates/wide.xhtml"
+    xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <h1>Email Engine Reporting</h1>
+
+        <div class="input-container">
+        
+        <p:menubar>  
+        <p:submenu label="Menu">
+           <p:menuitem value="Home" url="/" />
+           <p:menuitem value="Templates" url="/templates.jsf" />
+           <p:menuitem value="Targets" url="/targets.jsf" />
+           <p:menuitem value="Batch Campaign" url="/template.jsf" /> 
+           <p:menuitem value="Batch Campaign Reporting" url="/reporting.jsf" />
+        </p:submenu>
+        </p:menubar>
+
+
+       <h2>Transactional Reporting</h2>  
+       <p:dataTable id="txReportingTable" value="#{transactionalReporting.rows}" var="row"
+                 paginator="true" rows="10"
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                 rowsPerPageTemplate="5,10,15">
+        <f:facet name="header">
+            Transactional Reporting
+        </f:facet>
+        
+        <p:columns value="#{transactionalReporting.columns}" var="column">
+              <f:facet name="header">
+                <h:outputText value="#{column}" />
+              </f:facet>
+              <h:outputText value="#{row[column]}" />
+        </p:columns>
+
+       </p:dataTable>
+
+        
+        
+    </div>
+            
+        
+    </ui:define>
+</ui:composition>
