@@ -108,14 +108,8 @@ form {
 }
 
 
-label{
-font-size: 14px;
-font-weight: bold;
-color:#363636;
-}
-/*
 label {
-  float: left;
+  /*float: left;*/
   margin-left: 20px;
   margin-right: 0.5em;
   padding-top: 0.2em;
@@ -129,7 +123,7 @@ input {
   width: 500px;
   float: left;
 }
-*/
+
 textarea {
   width: 500px;
   height: 500px;

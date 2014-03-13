@@ -22,9 +22,9 @@
     <h:outputText value="Select Target: " />
 
         
-        <p:selectCheckboxMenu value="#{batchCampaignScheduler.targetIds}" id="selectedTargets" label="Available Targets" filter="true" filterText="Filter" filterMatchMode="startsWith" panelStyle="width:420px">
+        <p:selectCheckboxMenu value="#{batchCampaignScheduler.targetIds}" id="selectedTargets" label="Available Targets" filter="true" filterText="Filter" filterMatchMode="startsWith" panelStyle="width:620px">
              
-            <f:selectItems value="#{targetList.targets}" var="_target" itemLabel="#{_target.id}  |  #{_target.name}  |  #{_target.association}" itemValue="#{_target.id}" />
+            <f:selectItems value="#{targetList.targets}" var="_target" itemLabel="#{_target.name}  *  #{_target.association} * ID: #{_target.id}" itemValue="#{_target.id}" />
         </p:selectCheckboxMenu>
         
     </h:panelGrid>

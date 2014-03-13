@@ -14,16 +14,24 @@
      </p:menubar>
       
     <h1>Campaign Scheduler</h1>
+    <h3>Confirm your campaign details</h3>
     
     <h:form id="launchform">
     <h:panelGrid columns="2" cellpadding="5" style="margin-bottom:10px">
      </h:panelGrid>
       
-     <h:panelGrid columns="1" style="margin-top:10px">
+     <h:panelGrid columns="1" style="margin-top:10px;">
      
-     <h:outputText id="launch-ready1" value="The following campaign is ready to launch: " escape="false" />
+     <h:outputText id="launch-ready1" value="The following campaign is ready to launch. Click Schedule to proceed with these conditions." escape="false" style="font-weight:bold;" />
      <h:outputText id="launch-ready2" value="Template ID: #{batchCampaignScheduler.templateId}" escape="false" />
-     <h:outputText id="launch-ready3" value="Target ID: #{batchCampaignScheduler.targetId}" escape="false" />
+     
+     <ui:repeat value="#{batchCampaignScheduler.targetIds}" var="targid">
+         <h:outputText value="Target ID: #{targid}  "/>
+     </ui:repeat>
+     
+     <h:outputText id="launch-ready4" value="Scheduled launch time: #{batchCampaignScheduler.scheduledStart}">
+                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />  
+     </h:outputText>  
       
         <p:commandButton id="scheduleButton" value="Schedule" action="#{batchCampaignScheduler.schedule}" oncomplete="PF('dlg').show()" icon="ui-icon-disk" />
         
